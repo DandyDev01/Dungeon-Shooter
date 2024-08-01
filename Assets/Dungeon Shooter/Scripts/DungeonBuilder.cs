@@ -45,24 +45,43 @@ namespace DungeonShooter
 
 					BuilderRoom validNeihbour = GetValidRoom(door, attachTo);
 
+					Room newRoom = Instantiate(validNeihbour.room, Vector3.zero, Quaternion.identity).GetComponent<Room>();
+					placedRooms[numberOfRoomsPlaces] = newRoom;
+
 					// link rooms
 
-					Room r = Instantiate(validNeihbour.room, Vector3.zero, Quaternion.identity).GetComponent<Room>();
-					placedRooms[numberOfRoomsPlaces] = r;
+					// get the attachment point from attachTo for door
+					AttachmentPoint[] attachmentPoints = attachTo.Attachments.Where(x => x.door == door).ToArray();
+					AttachmentPoint attachToLink;
+					if (attachmentPoints.Length > 0)
+						attachToLink = attachmentPoints.First();
+					else
+						throw new Exception("No attachment point found for door: " + door);
 
-					var test = attachTo.Attachments.Where(x => x.door == door).First();
-					test.AttachedTo = r;
-					var t = r.Attachments.Where(x => GetValidDoor(x.door) == door).First();
-					t.AttachedTo = attachTo;
+					attachToLink.AttachedTo = newRoom;
+
+					// get the attachment point from newRoom that will plug into door
+					attachmentPoints = newRoom.Attachments.Where(x => GetValidDoor(x.door) == door).ToArray();
+					AttachmentPoint newRoomLink;
+					if (attachmentPoints.Length > 0)
+						newRoomLink = attachmentPoints.First();
+					else
+						throw new Exception("No attachment point found for door: " + door);
+
+					newRoomLink.AttachedTo = attachTo;
+
 
 					rooms[numberOfRoomsPlaces] = validNeihbour;
 					numberOfRoomsPlaces += 1;
+
+					if (numberOfRoomsPlaces == MAX_ROOMS)
+						break;
 				}
 
 				roomIndex += 1;
 				attachTo = placedRooms[roomIndex];
 
-				if (numberOfRoomsPlaces == MAX_ROOMS - 1)
+				if (numberOfRoomsPlaces == MAX_ROOMS)
 					break;
 			}
 
@@ -70,7 +89,7 @@ namespace DungeonShooter
 
 		}
 
-		private BuilderRoom GetValidRoom(Door door, Room attachTo)
+		internal BuilderRoom GetValidRoom(Door door, Room attachTo)
 		{
 			bool hasValidRoom = false;
 			BuilderRoom validRoom = new();
@@ -89,7 +108,7 @@ namespace DungeonShooter
 			return validRoom;
 		}
 
-		private Door GetValidDoor(Door door)
+		internal Door GetValidDoor(Door door)
 		{
 			switch (door)
 			{
@@ -108,7 +127,7 @@ namespace DungeonShooter
 	}
 
 	[Serializable]
-	internal struct BuilderRoom
+	internal class BuilderRoom
 	{
 		public Door[] doors;
 		public GameObject room;

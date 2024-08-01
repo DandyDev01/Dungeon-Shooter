@@ -13,7 +13,7 @@ namespace DungeonShooter
 	}
 
 	[Serializable]
-	internal struct AttachmentPoint
+	internal class AttachmentPoint
 	{
 		[SerializeField] private Transform transform;
 		 
