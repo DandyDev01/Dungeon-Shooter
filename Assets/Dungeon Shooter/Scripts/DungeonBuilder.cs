@@ -16,7 +16,6 @@ namespace DungeonShooter
 		private const int MAX_ROOMS = 12;
 		private const int MIN_ROOMS = 6;
 		
-		[SerializeField] private BuilderRoom[] _builderRooms;
 		[SerializeField] private Room[] _rooms;
 
 		private GridXY<List<Tuple<Room, bool>>> _grid;
@@ -157,7 +156,6 @@ namespace DungeonShooter
 					{
 						foreach (Room possibleOption in _rooms)
 						{
-							// if room has a door that leads to neighbour cell skip it
 							if (possibleOption.Attachments.Contains(x => neighbourCell.DoorToDirection(x.door) + cellToGetValidOptionsFrom == neighbourCell))
 							{
 								continue;
@@ -182,25 +180,6 @@ namespace DungeonShooter
 			return valid;
 		}
 
-		internal BuilderRoom GetValidRoom(Door door, Room attachTo)
-		{
-			bool hasValidRoom = false;
-			BuilderRoom validRoom = new();
-			do
-			{
-			 //&&attachTo.Attachments.Contains(j => GetValidDoor(j.door) == x && j.AttachedTo == null))
-				BuilderRoom room = _builderRooms.GetRandom();
-				if (room.doors.Contains(x => x == GetValidDoor(door)))
-				{
-					validRoom = room;
-					hasValidRoom = true;
-				}
-			} 
-			while (hasValidRoom == false);
-
-			return validRoom;
-		}
-
 		internal Door GetValidDoor(Door door)
 		{
 			switch (door)
@@ -216,80 +195,6 @@ namespace DungeonShooter
 			}
 
 			throw new Exception("Error with doors");
-		}
-
-		private void LegacyBuild()
-		{
-
-			int numberOfRoomsPlaces = 0;
-			int roomIndex = 0;
-			Room[] placedRooms = new Room[12];
-			BuilderRoom[] rooms = new BuilderRoom[MAX_ROOMS];
-
-			BuilderRoom currentRoom = _builderRooms.GetRandom();
-			rooms[numberOfRoomsPlaces] = currentRoom;
-
-			Room attachTo = Instantiate(rooms[0].room, Vector3.zero, Quaternion.identity).GetComponent<Room>();
-			placedRooms[0] = attachTo;
-
-			numberOfRoomsPlaces += 1;
-
-			// get rooms to build
-			foreach (BuilderRoom room in rooms)
-			{
-				foreach (Door door in room.doors)
-				{
-					if (attachTo.Attachments.Contains(x => x.door == door && x.AttachedTo != null))
-						continue;
-
-					BuilderRoom validNeihbour = GetValidRoom(door, attachTo);
-
-					Room newRoom = Instantiate(validNeihbour.room, Vector3.zero, Quaternion.identity).GetComponent<Room>();
-					placedRooms[numberOfRoomsPlaces] = newRoom;
-
-					// link rooms
-
-					// get the attachment point from attachTo for door
-					AttachmentPoint[] attachmentPoints = attachTo.Attachments.Where(x => x.door == door).ToArray();
-					AttachmentPoint attachToLink;
-					if (attachmentPoints.Length > 0)
-						attachToLink = attachmentPoints.First();
-					else
-						throw new Exception("No attachment point found for door: " + door);
-
-					attachToLink.AttachedTo = newRoom;
-
-					// get the attachment point from newRoom that will plug into door
-					attachmentPoints = newRoom.Attachments.Where(x => GetValidDoor(x.door) == door).ToArray();
-					AttachmentPoint newRoomLink;
-					if (attachmentPoints.Length > 0)
-						newRoomLink = attachmentPoints.First();
-					else
-						throw new Exception("No attachment point found for door: " + door);
-
-					newRoomLink.AttachedTo = attachTo;
-					Vector2 roomPos = newRoom.transform.position;
-					Vector2 roomAncherPos = newRoomLink.position;
-					Vector2 target = attachToLink.position;
-
-
-					newRoom.gameObject.transform.position = roomPos + (target - roomPos) - (roomAncherPos - roomPos);
-
-					rooms[numberOfRoomsPlaces] = validNeihbour;
-					numberOfRoomsPlaces += 1;
-
-					if (numberOfRoomsPlaces == MAX_ROOMS)
-						break;
-				}
-
-				roomIndex += 1;
-				attachTo = placedRooms[roomIndex];
-
-				if (numberOfRoomsPlaces == MAX_ROOMS)
-					break;
-			}
-
-			// replace rooms with excess doors
 		}
 	}
 
