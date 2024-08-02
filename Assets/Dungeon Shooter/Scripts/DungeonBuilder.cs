@@ -140,42 +140,40 @@ namespace DungeonShooter
 			//this cell previously did not have any valid options, now there are some valid options.
 			if (possibleOptions.Any() == false)
 			{
-				foreach (Room possibleOption in _rooms)
+				// if neighbour has room, then room with door to that neighbour is not valid
+				Vector3Int[] cellsThatNeighbourCellToGetValidOptionsFrom = _grid.GetNeighbourCells(cellToGetValidOptionsFrom.x,
+					cellToGetValidOptionsFrom.y).ToArray();
+
+				foreach (Vector3Int neighbourCell in cellsThatNeighbourCellToGetValidOptionsFrom)
 				{
-					// if neighbour has room, then room with door to that neighbour is not valid
-					Vector3Int[] cellsThatNeighbourCellToGetValidOptionsFrom = _grid.GetNeighbourCells(cellToGetValidOptionsFrom.x,
-						cellToGetValidOptionsFrom.y).ToArray();
-
-					bool isValid = true;
-					foreach (Vector3Int neighbourCell in cellsThatNeighbourCellToGetValidOptionsFrom)
+					// since rootCell is a neighbour of cellToGetValidOptions, skip it.
+					if (neighbourCell == rootCell)
 					{
-						// since rootCell is a neighbour of cellToGetValidOptions, skip it.
-						if (neighbourCell == rootCell)
-						{
-							isValid = false;
-							break;
-						}
+						continue;
+					}
 
-						if (_grid.GetElement(neighbourCell.x, neighbourCell.y).Count() == 1
-							&& _grid.GetElement(neighbourCell.x, neighbourCell.y).First().Item2)
+					if (_grid.GetElement(neighbourCell.x, neighbourCell.y).Count() == 1
+						&& _grid.GetElement(neighbourCell.x, neighbourCell.y).First().Item2)
+					{
+						foreach (Room possibleOption in _rooms)
 						{
 							// if room has a door that leads to neighbour cell skip it
-							if (possibleOption.Attachments.Contains(x => neighbourCell.DoorToDirection(x.door) + neighbourCell == neighbourCell))
+							if (possibleOption.Attachments.Contains(x => neighbourCell.DoorToDirection(x.door) + cellToGetValidOptionsFrom == neighbourCell))
 							{
-								isValid = false;
-								break;
+								continue;
 							}
+					
+							possibleOptions.Add(new Tuple<Room, bool>(possibleOption, false));
 						}
 					}
-					if (isValid)
-						possibleOptions.Add(new Tuple<Room, bool>(possibleOption, false));
 				}
 			}
 
 			// remove options that do not have a door facing root
 			foreach (var possibleOption in possibleOptions)
 			{
-				if (possibleOption.Item1.Attachments.Contains(x => x.door == GetValidDoor(rootDoorThatLeadsToNeighbour)))
+				if (possibleOption.Item1.Attachments.Contains(x => x.door == GetValidDoor(rootDoorThatLeadsToNeighbour))
+					&& possibleOption.Item1.Attachments.Count() >= 2)
 				{
 					valid.Add(possibleOption);
 				}
