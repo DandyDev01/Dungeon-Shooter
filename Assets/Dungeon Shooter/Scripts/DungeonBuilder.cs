@@ -30,15 +30,12 @@ namespace DungeonShooter
 		private void Start()
 		{
 			_grid = FindObjectOfType<DungeonGrid>().Grid;
-			//Build();
+			Build();
 		}
 
-		private void Update()
-		{
-			if (Input.GetKeyDown(KeyCode.B))
-				Build();
-		}
-
+		/// <summary>
+		/// Generates the dungeon layout.
+		/// </summary>
 		public void Build()
 		{
 			Vector3 centerWorld = new Vector3((_grid.Oragin.x + _grid.Columns * _grid.CellSize) / 2,
@@ -46,33 +43,52 @@ namespace DungeonShooter
 			Vector3Int currentCell = _grid.GetCellPosition(centerWorld);
 
 			Room currentRoom =_grid.GetElement(currentCell.x, currentCell.y).GetRandom().Item1;
+			Room previousRoom = null;
 
 			for (int i = 0; i < MAX_ROOMS; i++)
 			{
-				Instantiate(currentRoom, _grid.GetWorldPosition(currentCell.x, currentCell.y), Quaternion.identity);
-				_currentRoomCount += 1;
-
 				List<Tuple<Room, bool>> currentRoomOptions = _grid.GetElement(currentCell.x, currentCell.y).ToList();
 				currentRoomOptions.Clear();
 				currentRoomOptions.Add(new Tuple<Room, bool>(currentRoom, true));
 				_grid.SetElement(currentCell.x, currentCell.y, currentRoomOptions);
 				
-				UpdateNeibours(currentCell, currentRoom);
+				UpdateNeighbourOptions(currentCell, currentRoom);
 
 				Vector3Int neighbourCellWithLeastOptions = GetNeighbourCellWithLeastOptions(currentCell);
 
 				Tuple<Room, bool> roomToPlace = _grid.GetElement(neighbourCellWithLeastOptions.x, 
 					neighbourCellWithLeastOptions.y).GetRandom();
 				
-				_grid.SetElement(neighbourCellWithLeastOptions.x, neighbourCellWithLeastOptions.y,
-					new List<Tuple<Room, bool>> { new Tuple<Room, bool>(roomToPlace.Item1, true) });
-				
-				currentRoom = roomToPlace.Item1;
-				currentCell = neighbourCellWithLeastOptions;
 
+				previousRoom = currentRoom;
+
+				currentRoom = Instantiate(roomToPlace.Item1, _grid.GetWorldPosition(neighbourCellWithLeastOptions.x, neighbourCellWithLeastOptions.y), Quaternion.identity);
+				currentRoom.transform.parent = transform;
+				_currentRoomCount += 1;
+
+				Vector3Int direction = neighbourCellWithLeastOptions - currentCell;
+				AttachmentPoint attachmentPointToLinkTo = previousRoom.Attachments.Where(x => x.door == currentCell.DirectionToDoor(direction)).First();
+				AttachmentPoint attachToLink = currentRoom.Attachments.Where(x => x.door == currentCell.DirectionToDoor(direction * -1)).First();
+				attachmentPointToLinkTo.AttachedTo = currentRoom;
+
+				currentRoom.transform.position = currentRoom.transform.position + (attachmentPointToLinkTo.position - currentRoom.transform.position) - (attachToLink.position - currentRoom.transform.position);
+
+				currentCell = neighbourCellWithLeastOptions;
+			
+				_grid.SetElement(currentCell.x, currentCell.y,
+					new List<Tuple<Room, bool>> { new Tuple<Room, bool>(currentRoom, true) });
 			}
+
+			//TODO: Update rooms that have unlinked doors.
+
+			//TODO: Move rooms to be beside each other.
 		}
 
+		/// <summary>
+		/// Get the neighbour cell that has the least options for which room will go into that cell.
+		/// </summary>
+		/// <param name="cell">Cell to get the neighbour with the least options.</param>
+		/// <returns>Cell with the least options that also neighbours the specified cell.</returns>
 		private Vector3Int GetNeighbourCellWithLeastOptions(Vector3Int cell)
 		{
 			Vector3Int[] neighbourCells = _grid.GetNeighbourCells(cell.x, cell.y).ToArray();
@@ -103,7 +119,12 @@ namespace DungeonShooter
 			return cellOfNeighbourWithLeastOptions;
 		}
 
-		private void UpdateNeibours(Vector3Int cellOfRoot, Room root)
+		/// <summary>
+		/// Update the options that of all cells that neighbour cellOfRoot.
+		/// </summary>
+		/// <param name="cellOfRoot">Cell to get the neighbours of and update their options.</param>
+		/// <param name="root">Room that is inside cellOfRoot.</param>
+		private void UpdateNeighbourOptions(Vector3Int cellOfRoot, Room root)
 		{
 			Vector3Int[] neighbourCells = _grid.GetNeighbourCells(cellOfRoot.x, cellOfRoot.y).ToArray();
 
@@ -147,9 +168,7 @@ namespace DungeonShooter
 				{
 					// since rootCell is a neighbour of cellToGetValidOptions, skip it.
 					if (neighbourCell == rootCell)
-					{
 						continue;
-					}
 
 					if (_grid.GetElement(neighbourCell.x, neighbourCell.y).Count() == 1
 						&& _grid.GetElement(neighbourCell.x, neighbourCell.y).First().Item2)
@@ -157,9 +176,7 @@ namespace DungeonShooter
 						foreach (Room possibleOption in _rooms)
 						{
 							if (possibleOption.Attachments.Contains(x => neighbourCell.DoorToDirection(x.door) + cellToGetValidOptionsFrom == neighbourCell))
-							{
 								continue;
-							}
 					
 							possibleOptions.Add(new Tuple<Room, bool>(possibleOption, false));
 						}
@@ -180,6 +197,12 @@ namespace DungeonShooter
 			return valid;
 		}
 
+		/// <summary>
+		/// Get a door can connect to the specified door.
+		/// </summary>
+		/// <param name="door">Door to get a valid door for.</param>
+		/// <returns>Door that connects to the specified door.</returns>
+		/// <exception cref="Exception">When no valid do is found</exception>
 		internal Door GetValidDoor(Door door)
 		{
 			switch (door)
@@ -196,12 +219,5 @@ namespace DungeonShooter
 
 			throw new Exception("Error with doors");
 		}
-	}
-
-	[Serializable]
-	internal class BuilderRoom
-	{
-		public Door[] doors;
-		public GameObject room;
 	}
 }
