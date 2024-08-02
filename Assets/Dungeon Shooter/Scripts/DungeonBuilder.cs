@@ -60,15 +60,17 @@ namespace DungeonShooter
 				Tuple<Room, bool> newRoom = _grid.GetElement(neighbourCellWithLeastOptions.x, 
 					neighbourCellWithLeastOptions.y).GetRandom();
 				
-
 				previousRoom = currentRoom;
 
+				// create and link rooms together with halls
 				currentRoom = Instantiate(newRoom.Item1, _grid.GetWorldPosition(neighbourCellWithLeastOptions.x, neighbourCellWithLeastOptions.y), Quaternion.identity);
-				
+				currentRoom.transform.parent = transform;
+
 				Vector3Int directionOfCurrentRoomFromPreviousRoom = neighbourCellWithLeastOptions - currentCell;
 				
 				Hall hall = _halls.Where(x => x.Attachments.Contains(y => y.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom))).First();
 				hall = Instantiate(hall, Vector2.zero, Quaternion.identity);
+				hall.transform.parent = transform;
 
 				AttachmentPoint hallToPreviousRoomAttachmentPoint = hall.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom*-1)).First();
 				AttachmentPoint hallToCurrentRoomAttachmentPoint = hall.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom)).First();
