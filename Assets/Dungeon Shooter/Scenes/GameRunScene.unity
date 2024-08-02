@@ -730,11 +730,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6357654087618349182, guid: 51bf0c62ec931b44dbec776ae358b777, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.34
+      value: 29.89
       objectReference: {fileID: 0}
     - target: {fileID: 6357654087618349182, guid: 51bf0c62ec931b44dbec776ae358b777, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.55
+      value: 6.64
       objectReference: {fileID: 0}
     - target: {fileID: 6357654087618349182, guid: 51bf0c62ec931b44dbec776ae358b777, type: 3}
       propertyPath: m_LocalPosition.z
@@ -773,6 +773,54 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51bf0c62ec931b44dbec776ae358b777, type: 3}
+--- !u!1 &1742791321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1742791323}
+  - component: {fileID: 1742791324}
+  m_Layer: 0
+  m_Name: DungeonGrid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1742791323
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742791321}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1742791324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742791321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b3bc7df248943479c0cab9147202d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oragin: {x: 0, y: 0, z: 0}
+  columns: 11
+  rows: 11
+  cellSize: 16
 --- !u!1 &1778338784
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,23 +850,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f003bb4d9e0ec14ba47f66f7403ba00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _builderRooms: []
   _rooms:
-  - doors: 01000000
-    room: {fileID: 5775118128215670312, guid: d4774cd971a79a048bb7b985b36073f3, type: 3}
-  - doors: 00000000
-    room: {fileID: 8163074148298144760, guid: 670a9daab85fa4e428c5ef25a78aa16d, type: 3}
-  - doors: 03000000
-    room: {fileID: 1851971518423695969, guid: 379c6d380813a6b4da536417d59a24fb, type: 3}
-  - doors: 02000000
-    room: {fileID: 4935013584339385726, guid: b8a80dc49bb545848a6f2de5479f51a1, type: 3}
-  - doors: 0100000003000000
-    room: {fileID: 8436957110456601649, guid: 486bfcd0636103c44bd0b248f7c04c7d, type: 3}
-  - doors: 0000000003000000
-    room: {fileID: 3613516268328172593, guid: d49e038e8379a174e9b72af953174650, type: 3}
-  - doors: 0200000001000000
-    room: {fileID: 6015470037681034403, guid: 51bf0c62ec931b44dbec776ae358b777, type: 3}
-  - doors: 0200000000000000
-    room: {fileID: 8541292540526158040, guid: 9e0e5d1bd59588141808bf7e3386938f, type: 3}
+  - {fileID: -4679538151363296412, guid: b8a80dc49bb545848a6f2de5479f51a1, type: 3}
+  - {fileID: 8462723961103692751, guid: 51bf0c62ec931b44dbec776ae358b777, type: 3}
+  - {fileID: -6122789204149879676, guid: 9e0e5d1bd59588141808bf7e3386938f, type: 3}
+  - {fileID: -570505778703917090, guid: d4774cd971a79a048bb7b985b36073f3, type: 3}
+  - {fileID: -954099509914030207, guid: 670a9daab85fa4e428c5ef25a78aa16d, type: 3}
+  - {fileID: -6627637817600674680, guid: 379c6d380813a6b4da536417d59a24fb, type: 3}
+  - {fileID: -7301094515577750520, guid: 486bfcd0636103c44bd0b248f7c04c7d, type: 3}
+  - {fileID: 8956869553119927134, guid: d49e038e8379a174e9b72af953174650, type: 3}
 --- !u!4 &1778338786
 Transform:
   m_ObjectHideFlags: 0
@@ -984,3 +1025,4 @@ SceneRoots:
   - {fileID: 797710974}
   - {fileID: 1334891284}
   - {fileID: 1778338786}
+  - {fileID: 1742791323}

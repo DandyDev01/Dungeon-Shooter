@@ -6,7 +6,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-
+namespace DungeonShooter
+{
 	public static class Extensions
 	{
 		public static bool Approx(this Vector3 me, Vector3 other)
@@ -24,7 +25,45 @@ using UnityEngine.EventSystems;
 			return false;
 		}
 
-		
+		internal static Vector3Int DoorToDirection(this Vector3Int me, Door door)
+		{
+			switch (door) 
+			{
+				case Door.Left:
+					return Vector3Int.left;
+				case Door.Right:
+					return Vector3Int.right;
+				case Door.Top:
+					return Vector3Int.up;
+				case Door.Bottom:
+					return Vector3Int.down;
+			}
+
+			throw new Exception("door error");
+		}
+
+		internal static Door DirectionToDoor(this Vector3Int me, Vector3Int direction)
+		{
+			if (direction == Vector3Int.up)
+			{
+				return Door.Top;
+			}
+			else if (direction == Vector3Int.down)
+			{
+				return Door.Bottom;
+			}
+			else if (direction == Vector3Int.right)
+			{
+				return Door.Right;
+			}
+			else if (direction == Vector3Int.left)
+			{
+				return Door.Left;
+			}
+
+			throw new Exception("invalid direction");
+		}
+
 		public static T GetRandom<T>(this T[] array)
 		{
 			return array[UnityEngine.Random.Range(0, array.Length)];
@@ -51,3 +90,5 @@ using UnityEngine.EventSystems;
 		}
 
 	}
+
+}
