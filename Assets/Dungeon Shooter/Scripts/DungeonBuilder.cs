@@ -17,6 +17,7 @@ namespace DungeonShooter
 		private const int MIN_ROOMS = 6;
 		
 		[SerializeField] private Room[] _rooms;
+		[SerializeField] private Hall[] _halls;
 
 		private GridXY<List<Tuple<Room, bool>>> _grid;
 		private int _currentRoomCount = 0;
@@ -56,32 +57,41 @@ namespace DungeonShooter
 
 				Vector3Int neighbourCellWithLeastOptions = GetNeighbourCellWithLeastOptions(currentCell);
 
-				Tuple<Room, bool> roomToPlace = _grid.GetElement(neighbourCellWithLeastOptions.x, 
+				Tuple<Room, bool> newRoom = _grid.GetElement(neighbourCellWithLeastOptions.x, 
 					neighbourCellWithLeastOptions.y).GetRandom();
 				
 
 				previousRoom = currentRoom;
 
-				currentRoom = Instantiate(roomToPlace.Item1, _grid.GetWorldPosition(neighbourCellWithLeastOptions.x, neighbourCellWithLeastOptions.y), Quaternion.identity);
-				currentRoom.transform.parent = transform;
-				_currentRoomCount += 1;
+				currentRoom = Instantiate(newRoom.Item1, _grid.GetWorldPosition(neighbourCellWithLeastOptions.x, neighbourCellWithLeastOptions.y), Quaternion.identity);
+				
+				Vector3Int directionOfCurrentRoomFromPreviousRoom = neighbourCellWithLeastOptions - currentCell;
+				
+				Hall hall = _halls.Where(x => x.Attachments.Contains(y => y.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom))).First();
+				hall = Instantiate(hall, Vector2.zero, Quaternion.identity);
 
-				Vector3Int direction = neighbourCellWithLeastOptions - currentCell;
-				AttachmentPoint attachmentPointToLinkTo = previousRoom.Attachments.Where(x => x.door == currentCell.DirectionToDoor(direction)).First();
-				AttachmentPoint attachToLink = currentRoom.Attachments.Where(x => x.door == currentCell.DirectionToDoor(direction * -1)).First();
-				attachmentPointToLinkTo.AttachedTo = currentRoom;
+				AttachmentPoint hallToPreviousRoomAttachmentPoint = hall.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom*-1)).First();
+				AttachmentPoint hallToCurrentRoomAttachmentPoint = hall.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom)).First();
+				AttachmentPoint previousRoomAttachmentPoint = previousRoom.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom)).First();
+				AttachmentPoint currentRoomAttachmentPoint = currentRoom.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom * -1)).First();
 
-				currentRoom.transform.position = currentRoom.transform.position + (attachmentPointToLinkTo.position - currentRoom.transform.position) - (attachToLink.position - currentRoom.transform.position);
+				hallToPreviousRoomAttachmentPoint.AttachedTo = previousRoom;
+				hallToCurrentRoomAttachmentPoint.AttachedTo = currentRoom;
+
+				hall.transform.position = hall.transform.position + (previousRoomAttachmentPoint.position - hall.transform.position) - (hallToPreviousRoomAttachmentPoint.position - hall.transform.position);
+
+				currentRoom.transform.position = currentRoom.transform.position + (hallToCurrentRoomAttachmentPoint.position - currentRoom.transform.position) - (currentRoomAttachmentPoint.position - currentRoom.transform.position);
 
 				currentCell = neighbourCellWithLeastOptions;
 			
 				_grid.SetElement(currentCell.x, currentCell.y,
 					new List<Tuple<Room, bool>> { new Tuple<Room, bool>(currentRoom, true) });
+				
+				
+				_currentRoomCount += 1;
 			}
 
 			//TODO: Update rooms that have unlinked doors.
-
-			//TODO: Move rooms to be beside each other.
 		}
 
 		/// <summary>
