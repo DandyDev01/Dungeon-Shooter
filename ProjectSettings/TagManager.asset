@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Dungeon
+    uniqueID: 1498895735
+    locked: 0
+  - name: Player
+    uniqueID: 235792375
+    locked: 0
