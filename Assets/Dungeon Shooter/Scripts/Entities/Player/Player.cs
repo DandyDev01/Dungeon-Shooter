@@ -1,5 +1,6 @@
 using Codice.Client.Common.GameUI;
 using DungeonShooter.Player.Effects;
+using Guns2D;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace DungeonShooter.Player
 		private List<PlayerEffect> _effects;
 		private PlayerControls _inputControls;
 		private PlayerStateHolder _stateHolder;
+		private Gun2D _currentGun;
 		private Animator _animator;
 		private Vector2 _moveVector = Vector2.zero;
 		private bool _dodgeInput;
@@ -35,10 +37,12 @@ namespace DungeonShooter.Player
 		{
 			_inputControls = new PlayerControls();
 			_stateHolder = new PlayerStateHolder(this);
-			_animator = GetComponentInChildren<Animator>();
-
 			_effects = new List<PlayerEffect>();
+			_animator = GetComponentInChildren<Animator>();
+			_currentGun = GetComponentInChildren<Gun2D>();
 
+			_currentGun.Init();
+			
 			CurrentState = _stateHolder.IdleState;
 			CurrentState.Enter();
 		}
@@ -62,6 +66,14 @@ namespace DungeonShooter.Player
 		{
 			_dodgeInput = _inputControls.Player.Dodge.WasPressedThisFrame();
 			_attackInput = _inputControls.Player.Attack.ReadValue<float>() == 0 ? false : true;
+
+			if (_attackInput)
+				_currentGun.Fire();
+			else
+				_currentGun.EndFire();
+
+			_currentGun.RunActiveState(Time.deltaTime);
+
 			CurrentState.Run();
 
 			UpdateEffects();
@@ -109,6 +121,12 @@ namespace DungeonShooter.Player
 		{
 			if (_effects.Contains(effect))
 				_effects.Remove(effect);
+		}
+
+		public void SwitchGun(Gun2D newGun)
+		{
+			_currentGun = newGun;
+			_currentGun.Init();
 		}
 	}
 }

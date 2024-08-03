@@ -1,0 +1,1 @@
+Create a physics layer for projectiles and uncheck their collisions. If you don't some guns won't work properly and projectiles will collide.
