@@ -25,8 +25,6 @@ namespace DungeonShooter.Player
 		public override void Run()
 		{
 			CheckForStateSwitch();
-
-			
 		}
 
 		protected override void CheckForStateSwitch()

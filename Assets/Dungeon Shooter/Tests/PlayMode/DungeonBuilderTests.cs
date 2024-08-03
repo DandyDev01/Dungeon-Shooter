@@ -4,6 +4,7 @@ using DungeonShooter;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using DungeonShooter.DungenGeneration;
 
 namespace DungeonShooter.tests
 {

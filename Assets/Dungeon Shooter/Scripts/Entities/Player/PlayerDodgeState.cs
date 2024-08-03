@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DungeonShooter.Player.Effects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -20,12 +21,13 @@ namespace DungeonShooter.Player
 		public override void Enter()
 		{
 			_player.PlayAnimation("Dodge");
+			_player.AddEffect(new InvincibleEffect(1f));
+
 			_rigidbody.AddForce(_player.MoveVector * _player.DodgeForce, ForceMode2D.Impulse);
 		}
 
 		public override void Exit()
 		{
-
 		}
 
 		public override void Run()

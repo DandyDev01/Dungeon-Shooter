@@ -1,0 +1,16 @@
+{
+    "name": "DungeonShooterEditor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:bcf05a852bf50f74498e41b2980ca552"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Analytics;
 
 
-namespace DungeonShooter
+namespace DungeonShooter.DungenGeneration
 {
 	internal enum Door { Left, Right, Top, Bottom };
 

@@ -14,17 +14,14 @@ namespace DungeonShooter.Player
 
 		public override void Enter()
 		{
-			throw new NotImplementedException();
 		}
 
 		public override void Exit()
 		{
-			throw new NotImplementedException();
 		}
 
 		public override void Run()
 		{
-			throw new NotImplementedException();
 		}
 
 		protected override void CheckForStateSwitch()

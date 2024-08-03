@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonShooter
+namespace DungeonShooter.DungenGeneration
 {
 	public class DungeonGrid : MonoBehaviour
 	{

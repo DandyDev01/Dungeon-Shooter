@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using DungeonShooter.DungenGeneration;
 
 namespace DungeonShooter
 {
     [CustomEditor(typeof(DungeonGrid))]
-    public class SampleGridXYEditor : Editor
+    public class DungeonGridEditor : Editor
     {
         private void OnSceneGUI()
         {

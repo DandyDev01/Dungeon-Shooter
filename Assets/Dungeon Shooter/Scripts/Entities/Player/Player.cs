@@ -1,4 +1,5 @@
 using Codice.Client.Common.GameUI;
+using DungeonShooter.Player.Effects;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,9 +10,10 @@ namespace DungeonShooter.Player
 {
 	public class Player : MonoBehaviour
 	{
-		[SerializeField] private float _speed = 600f;
+		[SerializeField] private float _speed = 6f;
 		[SerializeField] private float _dodgeForce = 6f;
 
+		private List<PlayerEffect> _effects;
 		private PlayerControls _inputControls;
 		private PlayerStateHolder _stateHolder;
 		private Animator _animator;
@@ -33,7 +35,9 @@ namespace DungeonShooter.Player
 		{
 			_inputControls = new PlayerControls();
 			_stateHolder = new PlayerStateHolder(this);
-			_animator = GetComponentInChildren<Animator>();	
+			_animator = GetComponentInChildren<Animator>();
+
+			_effects = new List<PlayerEffect>();
 
 			CurrentState = _stateHolder.IdleState;
 			CurrentState.Enter();
@@ -59,6 +63,22 @@ namespace DungeonShooter.Player
 			_dodgeInput = _inputControls.Player.Dodge.WasPressedThisFrame();
 			_attackInput = _inputControls.Player.Attack.ReadValue<float>() == 0 ? false : true;
 			CurrentState.Run();
+
+			UpdateEffects();
+		}
+
+		private void UpdateEffects()
+		{
+			PlayerEffect effectToRemove = null;
+			foreach (PlayerEffect effect in _effects)
+			{
+				effect.Tick(Time.deltaTime);
+				if (effect.HasCompleted)
+					effectToRemove = effect;
+			}
+
+			if (effectToRemove != null)
+				RemoveEffect(effectToRemove);
 		}
 
 		private void OnMovementPerformed(InputAction.CallbackContext value)
@@ -74,6 +94,21 @@ namespace DungeonShooter.Player
 		public void PlayAnimation(string animationName)
 		{
 			_animator.Play(animationName);
+		}
+
+		public void AddEffect(PlayerEffect effect)
+		{
+			if (_effects.Contains(effect))
+				return;
+
+			_effects.Add(effect);
+			effect.Start(this);
+		}
+
+		public void RemoveEffect(PlayerEffect effect)
+		{
+			if (_effects.Contains(effect))
+				_effects.Remove(effect);
 		}
 	}
 }
