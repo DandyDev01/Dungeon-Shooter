@@ -368,3 +368,5 @@ MonoBehaviour:
     door: 0
   - transform: {fileID: 8639250084590706290}
     door: 2
+  - transform: {fileID: 1907286352560661510}
+    door: 3

@@ -284,6 +284,8 @@ MonoBehaviour:
     door: 3
   - transform: {fileID: 1192170361323956794}
     door: 1
+  - transform: {fileID: 1742795316492491515}
+    door: 2
 --- !u!1 &9090200762888190738
 GameObject:
   m_ObjectHideFlags: 0

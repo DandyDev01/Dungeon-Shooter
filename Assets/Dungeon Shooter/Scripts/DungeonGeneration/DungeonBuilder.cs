@@ -13,8 +13,8 @@ namespace DungeonShooter.DungenGeneration
 
 	public class DungeonBuilder : MonoBehaviour
 	{
-		private const int MAX_ROOMS = 12;
-		private const int MIN_ROOMS = 6;
+		private const int MAX_ROOMS = 36;
+		private const int MIN_ROOMS = 18;
 		
 		[SerializeField] private Room[] _rooms;
 		[SerializeField] private Hall[] _halls;
@@ -47,13 +47,17 @@ namespace DungeonShooter.DungenGeneration
 				currentRoomOptions.Clear();
 				currentRoomOptions.Add(new Tuple<Room, bool>(currentRoom, true));
 				_grid.SetElement(currentCell.x, currentCell.y, currentRoomOptions);
-				
+
 				UpdateNeighbourOptions(currentCell, currentRoom);
 
 				Vector3Int neighbourCellWithLeastOptions = GetNeighbourCellWithLeastOptions(currentCell);
 
+				// all neighbours have zero options
 				if (neighbourCellWithLeastOptions == Vector3Int.zero)
-					break;
+				{
+					Debug.Log("try again");
+					continue;
+				}
 
 				Tuple<Room, bool> newRoom = _grid.GetElement(neighbourCellWithLeastOptions.x, 
 					neighbourCellWithLeastOptions.y).GetRandom();
@@ -94,6 +98,8 @@ namespace DungeonShooter.DungenGeneration
 			}
 
 			//TODO: Update rooms that have unlinked doors.
+
+			// cases: door that leads to an empty cell, door that leads to a cell that is not empty, door leads down hall that leads no where.
 		}
 
 		/// <summary>
@@ -149,15 +155,15 @@ namespace DungeonShooter.DungenGeneration
 		{
 			Vector3Int[] neighbourCells = _grid.GetNeighbourCells(cellOfRoot.x, cellOfRoot.y).ToArray();
 
-			foreach (var neighbourCell in neighbourCells)
+			foreach (var neighbourToUpdateCell in neighbourCells)
 			{
-				List<Tuple<Room, bool>> neighbourCellsOptions = _grid.GetElement(neighbourCell.x, neighbourCell.y);
+				List<Tuple<Room, bool>> neighbourCellsOptions = _grid.GetElement(neighbourToUpdateCell.x, neighbourToUpdateCell.y);
 
-				Door rootToNeighbourDoor = neighbourCell.DirectionToDoor(neighbourCell - cellOfRoot);
+				Door rootToNeighbourDoor = neighbourToUpdateCell.DirectionToDoor(neighbourToUpdateCell - cellOfRoot);
 				List<Tuple<Room, bool>> validNeighbourCellOptions = GetValidOptions(root, neighbourCellsOptions, 
-					neighbourCell, cellOfRoot, rootToNeighbourDoor);
+					neighbourToUpdateCell, cellOfRoot, rootToNeighbourDoor);
 
-				_grid.SetElement(neighbourCell.x, neighbourCell.y, validNeighbourCellOptions);
+				_grid.SetElement(neighbourToUpdateCell.x, neighbourToUpdateCell.y, validNeighbourCellOptions);
 			}
 		}
 
@@ -173,7 +179,6 @@ namespace DungeonShooter.DungenGeneration
 			Vector3Int cellToGetValidOptionsFrom, Vector3Int rootCell, Door rootDoorThatLeadsToNeighbour)
 		{
 			// There are no valid options because root does not have a door facing cell.
-			// NOTE: these ifs are causing all neighbours to have no valid. Comment out. Won't fix bug, but are issue
 			if (root.Attachments.Contains(x => x.door == rootDoorThatLeadsToNeighbour) == false)
 				return new List<Tuple<Room, bool>>();	
 
@@ -197,8 +202,12 @@ namespace DungeonShooter.DungenGeneration
 					{
 						foreach (Room possibleOption in _rooms)
 						{
-							if (possibleOption.Attachments.Contains(x => neighbourCell.DoorToDirection(x.door) + cellToGetValidOptionsFrom == neighbourCell))
+							// if room has door pointing to neighbour skip it
+							if (possibleOption.Attachments.Contains(x => neighbourCell.DoorToDirection(x.door) == (neighbourCell - cellToGetValidOptionsFrom)))
 								continue;
+
+							//if (possibleOption.Attachments.Contains(x => neighbourCell.DoorToDirection(x.door) + cellToGetValidOptionsFrom == neighbourCell))
+							//	continue;
 					
 							possibleOptions.Add(new Tuple<Room, bool>(possibleOption, false));
 						}
@@ -209,14 +218,41 @@ namespace DungeonShooter.DungenGeneration
 			int leastDoorsAllowed = _currentRoomCount >= MIN_ROOMS ? 1 : 2;
 			int maxDoorsAllowed = _currentRoomCount < MAX_ROOMS - 1 ? MAX_ROOMS - _currentRoomCount : 1;
 
-			// remove options that do not have a door facing root
-			foreach (var possibleOption in possibleOptions)
+			// Remove options that do not have a door facing all neighbours with a door facing it.
+			foreach (Tuple<Room, bool> possibleOption in possibleOptions)
 			{
-				if (possibleOption.Item1.Attachments.Contains(x => x.door == GetValidDoor(rootDoorThatLeadsToNeighbour))
-					&& possibleOption.Item1.Attachments.Count() >= leastDoorsAllowed && possibleOption.Item1.Attachments.Count() <= maxDoorsAllowed)
+				List<Door> neededDoors = new List<Door>();
+				foreach (Vector3Int neighbour in _grid.GetNeighbourCells(cellToGetValidOptionsFrom.x, cellToGetValidOptionsFrom.y))
 				{
-					valid.Add(possibleOption);
+					List<Tuple<Room, bool>> neighbourOptions = _grid.GetElement(neighbour.x, neighbour.y);
+					if (neighbourOptions.Count > 1 && neighbourOptions.Contains(x => x.Item2) == false || neighbourOptions.Count == 0)
+						continue;
+
+					Room neighbourRoom = neighbourOptions.First().Item1;
+					if (  neighbourRoom.Attachments.Contains(x => x.door == GetValidDoor(neighbour.DirectionToDoor(neighbour - cellToGetValidOptionsFrom))))
+					{
+						neededDoors.Add(neighbour.DirectionToDoor(neighbour - cellToGetValidOptionsFrom));
+					}
+
 				}
+				foreach (Door door in neededDoors)
+				{
+					if (possibleOption.Item1.Attachments.Contains(x => x.door == door) 
+						&& possibleOption.Item1.Attachments.Count() >= leastDoorsAllowed
+						&& possibleOption.Item1.Attachments.Count() <= maxDoorsAllowed)
+					{
+						valid.Add(possibleOption);
+						break;
+					}
+				}
+
+
+				//if (possibleOption.Item1.Attachments.Contains(x => x.door == GetValidDoor(rootDoorThatLeadsToNeighbour))
+				//	&& possibleOption.Item1.Attachments.Count() >= leastDoorsAllowed 
+				//	&& possibleOption.Item1.Attachments.Count() <= maxDoorsAllowed)
+				//{
+				//	valid.Add(possibleOption);
+				//}
 			}
 
 			return valid;
