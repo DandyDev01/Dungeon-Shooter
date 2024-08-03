@@ -8,7 +8,7 @@ namespace DungeonShooter.Player.Effects
 	{
 		protected readonly Timer _timer;
 		protected readonly float _duration;
-		protected Player _effected;
+		protected PlayerCharacter _effected;
 		
 		public bool HasCompleted { get; protected set; }
 
@@ -22,7 +22,7 @@ namespace DungeonShooter.Player.Effects
 
 		public abstract void Tick(float delta);
 
-		public abstract void Start(Player effected);
+		public abstract void Start(PlayerCharacter effected);
 
 		public abstract void Stop();
 	}

@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 
 namespace DungeonShooter.Player
 {
-	public class Player : MonoBehaviour
+	public class PlayerCharacter : MonoBehaviour
 	{
 		[SerializeField] private float _speed = 6f;
 		[SerializeField] private float _dodgeForce = 6f;

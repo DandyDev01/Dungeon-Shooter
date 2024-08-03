@@ -8,7 +8,7 @@ namespace DungeonShooter.Player
 {
 	public class PlayerInteractingState : PlayerStateBase
 	{
-		public PlayerInteractingState(Player player) : base(player)
+		public PlayerInteractingState(PlayerCharacter player) : base(player)
 		{
 		}
 

@@ -9,7 +9,7 @@ namespace DungeonShooter.Player
 {
 	public class PlayerIdleState : PlayerStateBase
 	{
-		public PlayerIdleState(Player player) : base(player)
+		public PlayerIdleState(PlayerCharacter player) : base(player)
 		{
 		}
 

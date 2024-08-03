@@ -8,10 +8,10 @@ namespace DungeonShooter.Player
 	[Serializable]
 	public abstract class PlayerStateBase
 	{
-		protected readonly Player _player;
+		protected readonly PlayerCharacter _player;
 
 
-		public PlayerStateBase(Player player)
+		public PlayerStateBase(PlayerCharacter player)
 		{
 			_player = player;
 		}

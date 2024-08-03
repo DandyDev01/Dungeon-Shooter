@@ -14,7 +14,7 @@ namespace DungeonShooter.Player
 		private readonly Rigidbody2D _rigidbody;
 		private readonly Timer _timer;
 
-		public PlayerDodgeState(Player player) : base(player)
+		public PlayerDodgeState(PlayerCharacter player) : base(player)
 		{
 			_rigidbody = player.GetComponent<Rigidbody2D>();
 			_timer = new Timer(0.5f, false);

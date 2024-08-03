@@ -24,14 +24,9 @@ namespace DungeonShooter.DungenGeneration
 
 		public Room[] Rooms => _rooms;
 
-		private void Awake()
-		{
-		}
-
 		private void Start()
 		{
 			_grid = GetComponentInChildren<DungeonGrid>().Grid;
-			Build();
 		}
 
 		/// <summary>

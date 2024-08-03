@@ -11,7 +11,7 @@ namespace DungeonShooter.Player
 	{
 		private readonly Rigidbody2D _rigidbody;
 
-		public PlayerMoveState(Player player) : base(player)
+		public PlayerMoveState(PlayerCharacter player) : base(player)
 		{
 			_rigidbody = player.GetComponent<Rigidbody2D>();
 		}

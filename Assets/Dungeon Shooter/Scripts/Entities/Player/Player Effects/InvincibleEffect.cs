@@ -19,7 +19,7 @@ namespace DungeonShooter.Player.Effects
 			_timer.Tick(delta);
 		}
 
-		public override void Start(Player effected)
+		public override void Start(PlayerCharacter effected)
 		{
 			_timer.Play();
 

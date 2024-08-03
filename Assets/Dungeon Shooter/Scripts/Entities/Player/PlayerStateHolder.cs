@@ -12,7 +12,7 @@ namespace DungeonShooter.Player
 		public PlayerDeadState DeadState { get; private set; }
 		public PlayerInteractingState InteractingState { get; private set; }
 
-		public PlayerStateHolder(Player player)
+		public PlayerStateHolder(PlayerCharacter player)
 		{
 			IdleState = new PlayerIdleState(player);
 			MoveState = new PlayerMoveState(player);
