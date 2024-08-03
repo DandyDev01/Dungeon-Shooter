@@ -34,7 +34,7 @@ namespace DungeonShooter.DungenGeneration
 
 		private void InitilizeCells()
 		{
-			Room[] dungeonBuilderRooms = FindObjectOfType<DungeonBuilder>().Rooms;
+			Room[] dungeonBuilderRooms = transform.parent.GetComponent<DungeonBuilder>().Rooms;
 
 			for (int col = 0; col < columns; col++)
 			{

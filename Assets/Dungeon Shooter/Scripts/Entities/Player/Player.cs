@@ -18,8 +18,10 @@ namespace DungeonShooter.Player
 		private PlayerControls _inputControls;
 		private PlayerStateHolder _stateHolder;
 		private Gun2D _currentGun;
+		private Transform _gunPivotPoint;
 		private Animator _animator;
 		private Vector2 _moveVector = Vector2.zero;
+		private Vector2 _mousePosition = Vector2.zero;
 		private bool _dodgeInput;
 		private bool _attackInput;
 		private float _speedModifier = 1f;
@@ -40,6 +42,7 @@ namespace DungeonShooter.Player
 			_effects = new List<PlayerEffect>();
 			_animator = GetComponentInChildren<Animator>();
 			_currentGun = GetComponentInChildren<Gun2D>();
+			_gunPivotPoint = _currentGun.transform.parent;
 
 			_currentGun.Init();
 			
@@ -66,6 +69,22 @@ namespace DungeonShooter.Player
 		{
 			_dodgeInput = _inputControls.Player.Dodge.WasPressedThisFrame();
 			_attackInput = _inputControls.Player.Attack.ReadValue<float>() == 0 ? false : true;
+			
+			HandleGun();
+
+			CurrentState.Run();
+
+			UpdateEffects();
+		}
+
+		private void HandleGun()
+		{
+			_mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+			Vector3 direction = (Vector3)_mousePosition - _gunPivotPoint.transform.position;
+			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+			_gunPivotPoint.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle-90));
 
 			if (_attackInput)
 				_currentGun.Fire();
@@ -73,10 +92,6 @@ namespace DungeonShooter.Player
 				_currentGun.EndFire();
 
 			_currentGun.RunActiveState(Time.deltaTime);
-
-			CurrentState.Run();
-
-			UpdateEffects();
 		}
 
 		private void UpdateEffects()

@@ -30,7 +30,7 @@ namespace DungeonShooter.DungenGeneration
 
 		private void Start()
 		{
-			_grid = FindObjectOfType<DungeonGrid>().Grid;
+			_grid = GetComponentInChildren<DungeonGrid>().Grid;
 			Build();
 		}
 
