@@ -61,6 +61,10 @@ namespace DungeonShooter
 			{
 				return Door.Left;
 			}
+			else
+			{
+				return Door.Top;
+			}
 
 			throw new Exception("invalid direction");
 		}

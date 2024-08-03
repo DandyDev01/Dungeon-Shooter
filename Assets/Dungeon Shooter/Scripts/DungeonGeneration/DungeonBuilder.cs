@@ -52,6 +52,9 @@ namespace DungeonShooter.DungenGeneration
 
 				Vector3Int neighbourCellWithLeastOptions = GetNeighbourCellWithLeastOptions(currentCell);
 
+				if (neighbourCellWithLeastOptions == Vector3Int.zero)
+					break;
+
 				Tuple<Room, bool> newRoom = _grid.GetElement(neighbourCellWithLeastOptions.x, 
 					neighbourCellWithLeastOptions.y).GetRandom();
 				
@@ -67,13 +70,15 @@ namespace DungeonShooter.DungenGeneration
 				hall = Instantiate(hall, Vector2.zero, Quaternion.identity);
 				hall.transform.parent = transform;
 
-				AttachmentPoint hallToPreviousRoomAttachmentPoint = hall.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom*-1)).First();
-				AttachmentPoint hallToCurrentRoomAttachmentPoint = hall.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom)).First();
-				AttachmentPoint previousRoomAttachmentPoint = previousRoom.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom)).First();
-				AttachmentPoint currentRoomAttachmentPoint = currentRoom.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom * -1)).First();
+				AttachmentPoint<Room> hallToPreviousRoomAttachmentPoint = hall.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom*-1)).First();
+				AttachmentPoint<Room> hallToCurrentRoomAttachmentPoint = hall.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom)).First();
+				AttachmentPoint<Hall> previousRoomAttachmentPoint = previousRoom.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom)).First();
+				AttachmentPoint<Hall> currentRoomAttachmentPoint = currentRoom.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom * -1)).First();
 
 				hallToPreviousRoomAttachmentPoint.AttachedTo = previousRoom;
 				hallToCurrentRoomAttachmentPoint.AttachedTo = currentRoom;
+				previousRoomAttachmentPoint.AttachedTo = hall;
+				currentRoomAttachmentPoint.AttachedTo = hall;
 
 				hall.transform.position = hall.transform.position + (previousRoomAttachmentPoint.position - hall.transform.position) - (hallToPreviousRoomAttachmentPoint.position - hall.transform.position);
 
@@ -95,7 +100,7 @@ namespace DungeonShooter.DungenGeneration
 		/// Get the neighbour cell that has the least options for which room will go into that cell.
 		/// </summary>
 		/// <param name="cell">Cell to get the neighbour with the least options.</param>
-		/// <returns>Cell with the least options that also neighbours the specified cell.</returns>
+		/// <returns>Cell with the least options that also neighbours the specified cell. Returns Vector3Int.zero when nothing can be placed.</returns>
 		private Vector3Int GetNeighbourCellWithLeastOptions(Vector3Int cell)
 		{
 			Vector3Int[] neighbourCells = _grid.GetNeighbourCells(cell.x, cell.y).ToArray();
@@ -121,6 +126,15 @@ namespace DungeonShooter.DungenGeneration
 					neighbourWithLeastOptions = neighbourOptions;
 					cellOfNeighbourWithLeastOptions = neighbourCell;
 				}
+				else if (neighbourWithLeastOptions.Count == neighbourOptions.Count)
+				{
+					int random = UnityEngine.Random.Range(0, 10);
+					if (random < 5)
+					{
+						neighbourWithLeastOptions = neighbourOptions;
+						cellOfNeighbourWithLeastOptions = neighbourCell;
+					}
+				}
 			}
 
 			return cellOfNeighbourWithLeastOptions;
@@ -142,6 +156,7 @@ namespace DungeonShooter.DungenGeneration
 				Door rootToNeighbourDoor = neighbourCell.DirectionToDoor(neighbourCell - cellOfRoot);
 				List<Tuple<Room, bool>> validNeighbourCellOptions = GetValidOptions(root, neighbourCellsOptions, 
 					neighbourCell, cellOfRoot, rootToNeighbourDoor);
+
 				_grid.SetElement(neighbourCell.x, neighbourCell.y, validNeighbourCellOptions);
 			}
 		}
@@ -191,11 +206,14 @@ namespace DungeonShooter.DungenGeneration
 				}
 			}
 
+			int leastDoorsAllowed = _currentRoomCount >= MIN_ROOMS ? 1 : 2;
+			int maxDoorsAllowed = _currentRoomCount < MAX_ROOMS - 1 ? MAX_ROOMS - _currentRoomCount : 1;
+
 			// remove options that do not have a door facing root
 			foreach (var possibleOption in possibleOptions)
 			{
 				if (possibleOption.Item1.Attachments.Contains(x => x.door == GetValidDoor(rootDoorThatLeadsToNeighbour))
-					&& possibleOption.Item1.Attachments.Count() >= 2)
+					&& possibleOption.Item1.Attachments.Count() >= leastDoorsAllowed && possibleOption.Item1.Attachments.Count() <= maxDoorsAllowed)
 				{
 					valid.Add(possibleOption);
 				}

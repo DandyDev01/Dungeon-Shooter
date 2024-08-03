@@ -7,19 +7,19 @@ namespace DungeonShooter.DungenGeneration
 {
 	public class Room : MonoBehaviour
 	{
-		[SerializeField] AttachmentPoint[] _attachmentPoints;
+		[SerializeField] AttachmentPoint<Hall>[] _attachmentPoints;
 
-		internal AttachmentPoint[] Attachments => _attachmentPoints;
+		internal AttachmentPoint<Hall>[] Attachments => _attachmentPoints;
 	}
 
 	[Serializable]
-	internal class AttachmentPoint
+	internal class AttachmentPoint<T>
 	{
 		[SerializeField] private Transform transform;
 		 
 		public Door door;
 		public Vector3 position => transform.position;
 		
-		public Room AttachedTo { get; set; }
+		public T AttachedTo { get; set; }
 	}
 }

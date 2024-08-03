@@ -39,7 +39,6 @@ namespace DungeonShooter
 
 		public void EnterDungeon()
 		{
-			// unload the space port
 			SceneManager.UnloadSceneAsync("SpacePortScene");
 
 			_dungeonBuilder.Build();
