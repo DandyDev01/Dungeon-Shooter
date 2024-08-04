@@ -4,6 +4,7 @@ using Guns2D;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,12 +21,17 @@ namespace DungeonShooter.Player
 		private Gun2D _currentGun;
 		private Transform _gunPivotPoint;
 		private Animator _animator;
+		public Health _health;
+		private InteractableBase _closestInteractable;
+		private KeyInteractable _bossRoomKey;
 		private Vector2 _moveVector = Vector2.zero;
 		private Vector2 _mousePosition = Vector2.zero;
 		private bool _dodgeInput;
 		private bool _attackInput;
 		private float _speedModifier = 1f;
+		private float _interationRange = 1f;
 
+		public Health Health => _health;
 		public PlayerStateBase CurrentState { get; set; }
 		public PlayerStateHolder StateHolder => _stateHolder;
 		public Vector2 MoveVector => _moveVector;
@@ -42,6 +48,7 @@ namespace DungeonShooter.Player
 			_effects = new List<PlayerEffect>();
 			_animator = GetComponentInChildren<Animator>();
 			_currentGun = GetComponentInChildren<Gun2D>();
+			_health = new Health(5);
 			_gunPivotPoint = _currentGun.transform.parent;
 
 			_currentGun.Init();
@@ -75,6 +82,32 @@ namespace DungeonShooter.Player
 			CurrentState.Run();
 
 			UpdateEffects();
+
+			CheckForInteractables();
+
+			if (_inputControls.Player.Interact.WasPressedThisFrame())
+				_closestInteractable.Interact(this);
+		}
+
+		private void CheckForInteractables()
+		{
+			Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _interationRange)
+				.OrderBy(x => Vector2.Distance(x.transform.position, transform.position))
+				.Where(x => x.GetComponent<InteractableBase>() != null).ToArray();
+
+			if (colliders.Length == 0)
+			{
+				if (_closestInteractable != null)
+					_closestInteractable.transform.localScale = Vector2.one;
+				
+				_closestInteractable = null;
+				return;
+			}
+			
+			var closest = colliders.First().GetComponent<InteractableBase>();
+
+			_closestInteractable = closest;
+			_closestInteractable.transform.localScale = Vector2.one * 2;
 		}
 
 		private void HandleGun()
@@ -142,6 +175,11 @@ namespace DungeonShooter.Player
 		{
 			_currentGun = newGun;
 			_currentGun.Init();
+		}
+
+		public void PickupBossRoomKey(KeyInteractable key)
+		{
+			_bossRoomKey = key;
 		}
 	}
 }
