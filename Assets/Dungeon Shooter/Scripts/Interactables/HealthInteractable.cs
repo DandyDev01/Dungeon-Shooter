@@ -1,7 +1,5 @@
 using DungeonShooter;
 using DungeonShooter.Player;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthInteractable : InteractableBase

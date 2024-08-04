@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEditor;
-using Unity.VisualScripting;
 using UnityEditorInternal;
-using UnityEditor.Tilemaps;
 
 public class MoveComponentToParent : MonoBehaviour
 {
