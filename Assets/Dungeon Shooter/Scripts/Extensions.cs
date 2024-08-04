@@ -76,6 +76,9 @@ namespace DungeonShooter
 
 		public static T GetRandom<T>(this IEnumerable<T> array)
 		{
+			if (array.Count() == 0)
+				return default(T);
+
 			return array.ElementAt(UnityEngine.Random.Range(0, array.Count()));
 		}
 

@@ -1,6 +1,7 @@
 using DungeonShooter.DungenGeneration;
 using DungeonShooter.Player;
 using DungeonShooter.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SearchService;
@@ -24,6 +25,15 @@ namespace DungeonShooter
 		private void Start()
 		{
 
+		}
+
+		private void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.Space))
+			{
+				SceneManager.LoadScene(0);
+				Console.Clear();
+			}
 		}
 
 		public void SetSelectedPlayerCharacter(PlayerCharacter player)

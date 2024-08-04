@@ -10,6 +10,54 @@ namespace DungeonShooter.DungenGeneration
 		[SerializeField] AttachmentPoint<Hall>[] _attachmentPoints;
 
 		internal AttachmentPoint<Hall>[] Attachments => _attachmentPoints;
+
+		internal bool HasDoor(Door door)
+		{
+			return Attachments.Contains(x => x.door == door);
+		}
+
+		internal static Vector3Int DoorToDirection(Door door)
+		{
+			switch (door)
+			{
+				case Door.Left:
+					return Vector3Int.left;
+				case Door.Right:
+					return Vector3Int.right;
+				case Door.Top:
+					return Vector3Int.up;
+				case Door.Bottom:
+					return Vector3Int.down;
+			}
+
+			throw new Exception("door error");
+		}
+
+		internal static Door DirectionToDoor(Vector3Int direction)
+		{
+			if (direction == Vector3Int.up)
+			{
+				return Door.Top;
+			}
+			else if (direction == Vector3Int.down)
+			{
+				return Door.Bottom;
+			}
+			else if (direction == Vector3Int.right)
+			{
+				return Door.Right;
+			}
+			else if (direction == Vector3Int.left)
+			{
+				return Door.Left;
+			}
+			else
+			{
+				return Door.Top;
+			}
+
+			throw new Exception("invalid direction");
+		}
 	}
 
 	[Serializable]

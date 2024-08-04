@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Analytics;
 
@@ -20,13 +21,15 @@ namespace DungeonShooter.DungenGeneration
 		[SerializeField] private Hall[] _halls;
 
 		private GridXY<List<Tuple<Room, bool>>> _grid;
+		private DungeonGrid _dungenGrid;
 		private int _currentRoomCount = 0;
 
 		public Room[] Rooms => _rooms;
 
 		private void Start()
 		{
-			_grid = GetComponentInChildren<DungeonGrid>().Grid;
+			_dungenGrid = GetComponentInChildren<DungeonGrid>();
+			_grid = _dungenGrid.Grid;
 		}
 
 		/// <summary>
@@ -70,14 +73,14 @@ namespace DungeonShooter.DungenGeneration
 
 				Vector3Int directionOfCurrentRoomFromPreviousRoom = neighbourCellWithLeastOptions - currentCell;
 				
-				Hall hall = _halls.Where(x => x.Attachments.Contains(y => y.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom))).First();
+				Hall hall = _halls.Where(x => x.Attachments.Contains(y => y.door == Room.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom))).First();
 				hall = Instantiate(hall, Vector2.zero, Quaternion.identity);
 				hall.transform.parent = transform;
 
-				AttachmentPoint<Room> hallToPreviousRoomAttachmentPoint = hall.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom*-1)).First();
-				AttachmentPoint<Room> hallToCurrentRoomAttachmentPoint = hall.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom)).First();
-				AttachmentPoint<Hall> previousRoomAttachmentPoint = previousRoom.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom)).First();
-				AttachmentPoint<Hall> currentRoomAttachmentPoint = currentRoom.Attachments.Where(x => x.door == currentCell.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom * -1)).First();
+				AttachmentPoint<Room> hallToPreviousRoomAttachmentPoint = hall.Attachments.Where(x => x.door == Room.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom*-1)).First();
+				AttachmentPoint<Room> hallToCurrentRoomAttachmentPoint = hall.Attachments.Where(x => x.door == Room.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom)).First();
+				AttachmentPoint<Hall> previousRoomAttachmentPoint = previousRoom.Attachments.Where(x => x.door == Room.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom)).First();
+				AttachmentPoint<Hall> currentRoomAttachmentPoint = currentRoom.Attachments.Where(x => x.door == Room.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom * -1)).First();
 
 				hallToPreviousRoomAttachmentPoint.AttachedTo = previousRoom;
 				hallToCurrentRoomAttachmentPoint.AttachedTo = currentRoom;
@@ -100,6 +103,83 @@ namespace DungeonShooter.DungenGeneration
 			//TODO: Update rooms that have unlinked doors.
 
 			// cases: door that leads to an empty cell, door that leads to a cell that is not empty, door leads down hall that leads no where.
+			List<Room> rooms = _dungenGrid.GetRooms();
+
+			foreach (Room room in rooms)
+			{
+				// insdead of adding rooms, switch rooms so that there is the right amount of doors
+				AddAttachmentsToRoomsMissingAttachments(room);
+			}
+		}
+
+		private void AddAttachmentsToRoomsMissingAttachments(Room room)
+		{
+			// add hall and room to rooms that have door going no where.
+			if (room.Attachments.Contains(x => x.AttachedTo == null))
+			{
+				Vector3Int cellOfRoomMissingAttachments = _dungenGrid.GetCell(room);
+				
+				AttachmentPoint<Hall>[] missingAttachmentPoints = room.Attachments.Where((x => x.AttachedTo == null)).ToArray();
+
+				foreach (AttachmentPoint<Hall> attachmentPoint in missingAttachmentPoints)
+				{
+					Hall hall = Instantiate(_halls.Where(x => x.Attachments.Contains(y => y.door == attachmentPoint.door)).First(), Vector3.zero, Quaternion.identity);
+					hall.transform.parent = transform;
+					attachmentPoint.AttachedTo = hall;
+
+					Vector3Int[] neighbours = _grid.GetNeighbourCells(cellOfRoomMissingAttachments.x, cellOfRoomMissingAttachments.y).ToArray();
+					Vector3Int cellOfNewRoom = neighbours.Where(n => cellOfRoomMissingAttachments + Room.DoorToDirection(attachmentPoint.door) == n).First();
+					List<Door> doorsNeededByNewRoom = GetNeededDoors(cellOfNewRoom);
+					Room[] newRoomOptions = _rooms;
+					List<Room> validOptions = new();
+
+					Debug.Log("Doors need by new room: " + doorsNeededByNewRoom.Count + cellOfNewRoom.ToString(), hall.gameObject);
+					foreach (var item in doorsNeededByNewRoom)
+					{
+						Debug.Log(item.ToString());
+					}
+					Debug.Log("====================================" + "\n");
+
+					//// remove optons that have doors other than the needed ones.
+					//foreach (Room option in newRoomOptions)
+					//{
+					//	bool isValid = true;
+					//	foreach (AttachmentPoint<Hall> item in option.Attachments)
+					//	{
+					//		if (doorsNeededByNewRoom.Contains(item.door) == false)
+					//		{
+					//			isValid = false;
+					//			break;
+					//		}
+					//	}
+
+					//	if (isValid)
+					//		validOptions.Add(option);
+					//}
+
+					AttachmentPoint<Room> hallToRoom = hall.Attachments.Where(x => x.door == GetOpositeDoor(attachmentPoint.door)).First();
+					hallToRoom.AttachedTo = room;
+
+					//AttachmentPoint<Room> hallToNewRoom = hall.Attachments.Where(x => x.door == attachmentPoint.door).First();
+
+					//if (validOptions.Count() == 0)
+					//	Debug.Log("error");
+
+					//Room newRoom = Instantiate(validOptions.GetRandom(), Vector3.zero, Quaternion.identity);
+					//newRoom.transform.parent = transform;
+					//newRoom.Attachments.First().AttachedTo = hall;
+					//hallToNewRoom.AttachedTo = newRoom;
+
+					//AttachmentPoint<Hall> newRoomToHall = newRoom.Attachments.Where(x => x.door == GetOpositeDoor(hallToNewRoom.door)).First();
+
+					hall.transform.position = hall.transform.position + (attachmentPoint.position - hall.transform.position) - (hallToRoom.position - hall.transform.position);
+					//newRoom.transform.position = newRoom.transform.position + (hallToNewRoom.position - newRoom.transform.position) - (newRoomToHall.position - newRoom.transform.position);
+
+					//_grid.SetElement(cellOfNewRoom.x, cellOfNewRoom.y, new List<Tuple<Room, bool>>() { new Tuple<Room, bool>(newRoom, true) });
+
+					//UpdateNeighbourOptions(cellOfNewRoom, newRoom);
+				}
+			}
 		}
 
 		/// <summary>
@@ -159,9 +239,10 @@ namespace DungeonShooter.DungenGeneration
 			{
 				List<Tuple<Room, bool>> neighbourCellsOptions = _grid.GetElement(neighbourToUpdateCell.x, neighbourToUpdateCell.y);
 
-				Door rootToNeighbourDoor = neighbourToUpdateCell.DirectionToDoor(neighbourToUpdateCell - cellOfRoot);
+				Door rootToNeighbourDoor = Room.DirectionToDoor(neighbourToUpdateCell - cellOfRoot);
+				
 				List<Tuple<Room, bool>> validNeighbourCellOptions = GetValidOptions(root, neighbourCellsOptions, 
-					neighbourToUpdateCell, cellOfRoot, rootToNeighbourDoor);
+					neighbourToUpdateCell, rootToNeighbourDoor);
 
 				_grid.SetElement(neighbourToUpdateCell.x, neighbourToUpdateCell.y, validNeighbourCellOptions);
 			}
@@ -176,7 +257,7 @@ namespace DungeonShooter.DungenGeneration
 		/// <param name="rootCell">cell the root room is in</param>
 		/// <returns>valid options</returns>
 		private List<Tuple<Room, bool>> GetValidOptions(Room root, List<Tuple<Room, bool>> possibleOptions, 
-			Vector3Int cellToGetValidOptionsFrom, Vector3Int rootCell, Door rootDoorThatLeadsToNeighbour)
+			Vector3Int cellToGetValidOptionsFrom, Door rootDoorThatLeadsToNeighbour)
 		{
 			// There are no valid options because root does not have a door facing cell.
 			if (root.Attachments.Contains(x => x.door == rootDoorThatLeadsToNeighbour) == false)
@@ -194,21 +275,20 @@ namespace DungeonShooter.DungenGeneration
 				foreach (Vector3Int neighbourCell in cellsThatNeighbourCellToGetValidOptionsFrom)
 				{
 					// since rootCell is a neighbour of cellToGetValidOptions, skip it.
-					if (neighbourCell == rootCell)
+					if (neighbourCell == _dungenGrid.GetCell(root))
 						continue;
 
+					// neighbour cell has a set room.
 					if (_grid.GetElement(neighbourCell.x, neighbourCell.y).Count() == 1
 						&& _grid.GetElement(neighbourCell.x, neighbourCell.y).First().Item2)
 					{
+
+						// get rooms facing the neighbour
 						foreach (Room possibleOption in _rooms)
 						{
-							// if room has door pointing to neighbour skip it
-							if (possibleOption.Attachments.Contains(x => neighbourCell.DoorToDirection(x.door) == (neighbourCell - cellToGetValidOptionsFrom)))
+							if (possibleOption.Attachments.Contains(x => Room.DoorToDirection(x.door) == (neighbourCell - cellToGetValidOptionsFrom)))
 								continue;
 
-							//if (possibleOption.Attachments.Contains(x => neighbourCell.DoorToDirection(x.door) + cellToGetValidOptionsFrom == neighbourCell))
-							//	continue;
-					
 							possibleOptions.Add(new Tuple<Room, bool>(possibleOption, false));
 						}
 					}
@@ -221,23 +301,11 @@ namespace DungeonShooter.DungenGeneration
 			// Remove options that do not have a door facing all neighbours with a door facing it.
 			foreach (Tuple<Room, bool> possibleOption in possibleOptions)
 			{
-				List<Door> neededDoors = new List<Door>();
-				foreach (Vector3Int neighbour in _grid.GetNeighbourCells(cellToGetValidOptionsFrom.x, cellToGetValidOptionsFrom.y))
-				{
-					List<Tuple<Room, bool>> neighbourOptions = _grid.GetElement(neighbour.x, neighbour.y);
-					if (neighbourOptions.Count > 1 && neighbourOptions.Contains(x => x.Item2) == false || neighbourOptions.Count == 0)
-						continue;
+				List<Door> neededDoors = GetNeededDoors(cellToGetValidOptionsFrom);
 
-					Room neighbourRoom = neighbourOptions.First().Item1;
-					if (  neighbourRoom.Attachments.Contains(x => x.door == GetValidDoor(neighbour.DirectionToDoor(neighbour - cellToGetValidOptionsFrom))))
-					{
-						neededDoors.Add(neighbour.DirectionToDoor(neighbour - cellToGetValidOptionsFrom));
-					}
-
-				}
 				foreach (Door door in neededDoors)
 				{
-					if (possibleOption.Item1.Attachments.Contains(x => x.door == door) 
+					if (possibleOption.Item1.Attachments.Contains(x => x.door == door)
 						&& possibleOption.Item1.Attachments.Count() >= leastDoorsAllowed
 						&& possibleOption.Item1.Attachments.Count() <= maxDoorsAllowed)
 					{
@@ -259,12 +327,39 @@ namespace DungeonShooter.DungenGeneration
 		}
 
 		/// <summary>
+		/// Get the doors that a room in the specified cell would need in order to connect to its neighbours.
+		/// </summary>
+		/// <param name="cellToGetNeededDoorsFor">Cell of room you need the doors for.</param>
+		/// <returns>Doors that the room in the specified cell would need to connect to its neighbours.</returns>
+		private List<Door> GetNeededDoors(Vector3Int cellToGetNeededDoorsFor)
+		{
+			List<Door> neededDoors = new List<Door>();
+			foreach (Vector3Int neighbour in _grid.GetNeighbourCells(cellToGetNeededDoorsFor.x, cellToGetNeededDoorsFor.y))
+			{
+				List<Tuple<Room, bool>> neighbourOptions = _grid.GetElement(neighbour.x, neighbour.y);
+				
+				// neighbour does not have a set room, so ther are no doors to connect to.
+				if ((neighbourOptions.Count > 1 && neighbourOptions.Contains(x => x.Item2 == false)) || neighbourOptions.Count == 0)
+					continue;
+
+				Room neighbourRoom = neighbourOptions.First().Item1;
+
+				if (neighbourRoom.HasDoor(Room.DirectionToDoor(cellToGetNeededDoorsFor - neighbour)))
+				{
+					neededDoors.Add(Room.DirectionToDoor(neighbour - cellToGetNeededDoorsFor));
+				}
+			}
+
+			return neededDoors;
+		}
+
+		/// <summary>
 		/// Get a door can connect to the specified door.
 		/// </summary>
 		/// <param name="door">Door to get a valid door for.</param>
 		/// <returns>Door that connects to the specified door.</returns>
 		/// <exception cref="Exception">When no valid do is found</exception>
-		internal Door GetValidDoor(Door door)
+		internal Door GetOpositeDoor(Door door)
 		{
 			switch (door)
 			{
