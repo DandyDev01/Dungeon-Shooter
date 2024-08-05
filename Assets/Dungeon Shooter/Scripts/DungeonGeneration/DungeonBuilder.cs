@@ -14,8 +14,8 @@ namespace DungeonShooter.DungenGeneration
 
 	public class DungeonBuilder : MonoBehaviour
 	{
-		private const int MAX_ROOMS = 36;
-		private const int MIN_ROOMS = 18;
+		private const int MAX_ROOMS = 12;
+		private const int MIN_ROOMS = 6;
 		
 		[SerializeField] private Room[] _rooms;
 		[SerializeField] private Hall[] _halls;
@@ -77,10 +77,22 @@ namespace DungeonShooter.DungenGeneration
 				hall = Instantiate(hall, Vector2.zero, Quaternion.identity);
 				hall.transform.parent = transform;
 
-				AttachmentPoint<Room> hallToPreviousRoomAttachmentPoint = hall.Attachments.Where(x => x.door == Room.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom*-1)).First();
-				AttachmentPoint<Room> hallToCurrentRoomAttachmentPoint = hall.Attachments.Where(x => x.door == Room.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom)).First();
-				AttachmentPoint<Hall> previousRoomAttachmentPoint = previousRoom.Attachments.Where(x => x.door == Room.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom)).First();
-				AttachmentPoint<Hall> currentRoomAttachmentPoint = currentRoom.Attachments.Where(x => x.door == Room.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom * -1)).First();
+				AttachmentPoint<Room> hallToPreviousRoomAttachmentPoint;
+				AttachmentPoint<Room> hallToCurrentRoomAttachmentPoint;
+				AttachmentPoint<Hall> previousRoomAttachmentPoint;
+				AttachmentPoint<Hall> currentRoomAttachmentPoint;
+
+				try
+				{
+					hallToPreviousRoomAttachmentPoint = hall.Attachments.Where(x => x.door == Room.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom * -1)).First();
+					hallToCurrentRoomAttachmentPoint = hall.Attachments.Where(x => x.door == Room.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom)).First();
+					previousRoomAttachmentPoint = previousRoom.Attachments.Where(x => x.door == Room.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom)).First();
+					currentRoomAttachmentPoint = currentRoom.Attachments.Where(x => x.door == Room.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom * -1)).First();
+				}
+				catch
+				{
+					break;
+				}
 
 				hallToPreviousRoomAttachmentPoint.AttachedTo = previousRoom;
 				hallToCurrentRoomAttachmentPoint.AttachedTo = currentRoom;
@@ -108,8 +120,56 @@ namespace DungeonShooter.DungenGeneration
 			foreach (Room room in rooms)
 			{
 				// insdead of adding rooms, switch rooms so that there is the right amount of doors
-				AddAttachmentsToRoomsMissingAttachments(room);
+				//AddAttachmentsToRoomsMissingAttachments(room);
+
+				if (room.Attachments.Contains(x => x.AttachedTo == null))
+					UpdateRoom(room);
 			}
+		}
+
+		/// <summary>
+		/// Changes the room so that it only has doors that are connected to halls
+		/// </summary>
+		/// <param name="room">room that will be changed</param>
+		private void UpdateRoom(Room room)
+		{
+			Vector3Int cell = _dungenGrid.GetCell(room);
+			Vector3 worldPosition = room.transform.position;
+			Room newRoom = null;
+			List<Door> doors = new();
+
+			foreach (AttachmentPoint<Hall> attachmentPoint in room.Attachments)
+			{
+				if (attachmentPoint.AttachedTo == null)
+					continue;
+
+				doors.Add(attachmentPoint.door);
+			}
+
+			foreach (Room possibleOption in _rooms)
+			{
+				if (possibleOption.Attachments.Contains(x => doors.Contains(x.door) == false) || possibleOption.Attachments.Length < doors.Count)
+					continue;
+
+				newRoom = possibleOption;
+				break;
+			}
+
+			if (newRoom == null)
+			{
+				Debug.LogError("Could not find replacment for ", room.gameObject);
+				return;
+			}
+
+			newRoom = Instantiate(newRoom, worldPosition, Quaternion.identity);
+			newRoom.UpdateAttachments(room.Attachments.Where(x => x.AttachedTo != null).ToArray());
+
+			Transform old = transform.GetChildWhere(x => x.position == newRoom.transform.position);
+
+			newRoom.transform.parent = transform;
+			_grid.SetElement(cell.x, cell.y, new List<Tuple<Room, bool>>() { new Tuple<Room,bool>(newRoom, true) });
+
+			Destroy(old.gameObject);
 		}
 
 		private void AddAttachmentsToRoomsMissingAttachments(Room room)

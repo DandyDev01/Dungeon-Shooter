@@ -16,6 +16,11 @@ namespace DungeonShooter.DungenGeneration
 			return Attachments.Contains(x => x.door == door);
 		}
 
+		internal void UpdateAttachments(AttachmentPoint<Hall>[] attachments)
+		{
+			_attachmentPoints = attachments;
+		}
+
 		internal static Vector3Int DoorToDirection(Door door)
 		{
 			switch (door)
