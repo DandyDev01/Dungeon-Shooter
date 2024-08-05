@@ -13,12 +13,13 @@ namespace DungeonShooter
 		[SerializeField] private EnemyBaseState _attackState;
 		[SerializeField] private EnemyBaseState _spawnState;
 
+		private PathBuilder _pathBuilder;
 		private Health _health;
 		private Animator _animator;
 		private float _speedModifier = 1;
 
 		public Health Health => _health;
-
+		public PathBuilder PathBuilder => _pathBuilder;
 		public EnemyBaseState CurrentState { get; set; }
 
 		private void Awake()
