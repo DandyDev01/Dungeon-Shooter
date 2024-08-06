@@ -321,8 +321,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 0
-  _grid: {fileID: 0}
-  _marker: {fileID: 0}
+  _playerTransform: {fileID: 0}
+  _marker: {fileID: 6168470794142635413, guid: 22192ba076106bf4cb2de035c2427675, type: 3}
   _moveState: {fileID: 1982249671339414757}
   _attackState: {fileID: 0}
   _spawnState: {fileID: 7171600567470510642}

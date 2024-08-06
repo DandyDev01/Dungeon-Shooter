@@ -85,6 +85,7 @@ public class PathBuilder
 			// could not find a path
 			if (index >= nodes.Count)
 			{
+				current = null;
 				// check for path again but with higher exit tolerance
 				foreach (Node node in nodes)
 				{
@@ -95,7 +96,11 @@ public class PathBuilder
 					}
 				}
 
-				Debug.Log("Issue. Cannot get to target: " + target);
+				if (current == null)
+				{
+					Debug.Log("Issue. Cannot get to target: " + target);
+					break;
+				}
 			}
 
 			current = nodes[index];

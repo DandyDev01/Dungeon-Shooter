@@ -10,8 +10,6 @@ namespace DungeonShooter
 	{
 		[SerializeField] private float _speed;
 		[SerializeField] private Transform _playerTransform;
-		[SerializeField] private SampleGridXY _grid;
-		[SerializeField] private GameObject _marker;
 
 		[Header("States")]
 		[SerializeField] private EnemyBaseState _moveState;
@@ -19,7 +17,6 @@ namespace DungeonShooter
 		[SerializeField] private EnemyBaseState _spawnState;
 
 		private Rigidbody2D _rigidbody;
-		private PathBuilder _pathBuilder;
 		private Health _health;
 		private Animator _animator;
 		private float _speedModifier = 1;
@@ -28,7 +25,6 @@ namespace DungeonShooter
 		public EnemyBaseState AttackState => _attackState;
 		public EnemyBaseState SpawnState => _spawnState;
 		public Health Health => _health;
-		public PathBuilder PathBuilder => _pathBuilder;
 		public EnemyBaseState CurrentState { get; set; }
 
 		private void Awake()
@@ -40,8 +36,6 @@ namespace DungeonShooter
 
 		private void Start()
 		{
-			_pathBuilder = new PathBuilder(_grid.Grid, _marker);
-
 			CurrentState = _spawnState;
 			CurrentState.Enter();
 		}
@@ -61,11 +55,9 @@ namespace DungeonShooter
 			return _playerTransform.position;
 		}
 
-		internal void Move(Vector2 currentPathTarget)
+		internal void Move()
 		{
-			Vector2 direction = currentPathTarget - (Vector2)transform.position;
-
-			_rigidbody.velocity = direction.normalized * _speed * _speedModifier * Time.deltaTime;
+			transform.position = Vector2.MoveTowards(transform.position, GetTargetPosition(), _speed * _speedModifier * Time.deltaTime);
 		}
 	}
 
