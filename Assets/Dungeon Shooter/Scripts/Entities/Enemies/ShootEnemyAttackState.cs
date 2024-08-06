@@ -38,6 +38,7 @@ namespace DungeonShooter
 			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
 			_gunPivotPont.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+			_gun.RunActiveState(Time.deltaTime);
 		}
 
 		protected override void CheckForStateSwitch()
