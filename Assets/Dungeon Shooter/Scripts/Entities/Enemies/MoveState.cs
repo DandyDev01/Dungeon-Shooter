@@ -27,7 +27,7 @@ namespace DungeonShooter
 		{
 			float distanceFromTarget = Vector2.Distance(transform.position, _enemy.GetTargetPosition());
 
-			if (distanceFromTarget < 1)
+			if (distanceFromTarget < _enemy.AttackDistance)
 				SwitchState(_enemy.AttackState);
 		}
 	}

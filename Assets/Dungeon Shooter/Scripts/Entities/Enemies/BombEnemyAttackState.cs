@@ -49,7 +49,6 @@ namespace DungeonShooter
 		{
 			var player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacter>();
 			player.Health.Damage(1);
-			Debug.Log("Player was damaged");
 
 			Destroy(transform.parent.gameObject);
 		}
