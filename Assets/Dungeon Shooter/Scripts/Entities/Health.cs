@@ -9,6 +9,7 @@ namespace DungeonShooter
 		public int MaxHealth { get; private set; }
 
 		public Action OnDeath;
+		public Action<int, int> OnHealthChanged;
 
 		public Health(int maxHealth)
 		{
@@ -22,11 +23,14 @@ namespace DungeonShooter
 
 			if (Current == 0)
 				OnDeath?.Invoke();
+
+			OnHealthChanged?.Invoke(Current, MaxHealth);
 		}
 
 		public void Heal(int amount)
 		{
 			Current = Mathf.Min(Current + amount, MaxHealth);
+			OnHealthChanged?.Invoke(Current, MaxHealth);
 		}
 	}
 }

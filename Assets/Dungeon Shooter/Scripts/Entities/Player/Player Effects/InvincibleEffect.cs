@@ -12,6 +12,7 @@ namespace DungeonShooter.Player.Effects
 
 		public InvincibleEffect(float duration) : base(duration)
 		{
+			_effectType = Guns2D.PlayerEffectType.INVINCIBLE;
 		}
 
 		public override void Tick(float delta)

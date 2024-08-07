@@ -182,6 +182,10 @@ PrefabInstance:
       propertyPath: _attackState
       value: 
       objectReference: {fileID: 9185364068110360905}
+    - target: {fileID: 9180381254765198363, guid: e28a05d3434bebe4bb059acf46bd8339, type: 3}
+      propertyPath: _attackDistance
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

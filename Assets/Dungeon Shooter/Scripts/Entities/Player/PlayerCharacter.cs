@@ -34,7 +34,7 @@ namespace DungeonShooter.Player
 		public Vector2 MoveVector => _moveVector;
 		public bool DodgeInput => _dodgeInput;
 		public bool AttackInput => _attackInput;	
-		public float SpeedModifier => _speedModifier;
+		public float SpeedModifier { get => _speedModifier; set => _speedModifier = value; } 
 		public float Speed => _speed;
 		public float DodgeForce => _dodgeForce;
 
@@ -155,7 +155,7 @@ namespace DungeonShooter.Player
 
 		public void AddEffect(PlayerEffect effect)
 		{
-			if (_effects.Contains(effect))
+			if (_effects.Contains(effect) || _effects.Contains(x => x.EffectType == effect.EffectType))
 				return;
 
 			_effects.Add(effect);
