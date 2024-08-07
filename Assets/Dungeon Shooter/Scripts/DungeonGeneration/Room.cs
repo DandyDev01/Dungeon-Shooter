@@ -13,6 +13,7 @@ namespace DungeonShooter.DungenGeneration
 		private bool _isCleared = false;
 		private bool _isActive = false;
 		private bool _isSpawn = false;
+		private bool _isLoot = false;
 
 		internal AttachmentPoint<Hall>[] Attachments => _attachmentPoints;
 
@@ -30,6 +31,8 @@ namespace DungeonShooter.DungenGeneration
 		public void SetSpawn(bool isSpawn) => _isSpawn = isSpawn;
 
 		public void SetBoss(bool isBoss) => _isBossRoom = isBoss;
+
+		public void SetIsLoot(bool isLoot) => _isLoot = isLoot;
 
 		internal bool HasDoor(Door door)
 		{

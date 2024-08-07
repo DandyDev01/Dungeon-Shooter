@@ -71,6 +71,12 @@ namespace DungeonShooter.DungenGeneration
 				currentRoom = Instantiate(newRoom.Item1, _grid.GetWorldPosition(neighbourCellWithLeastOptions.x, neighbourCellWithLeastOptions.y), Quaternion.identity);
 				currentRoom.transform.parent = transform;
 
+				if (i == 0)
+					currentRoom.SetSpawn(true);
+
+				if (i == MAX_ROOMS - 1)
+					currentRoom.SetBoss(true);
+
 				Vector3Int directionOfCurrentRoomFromPreviousRoom = neighbourCellWithLeastOptions - currentCell;
 				
 				Hall hall = _halls.Where(x => x.Attachments.Contains(y => y.door == Room.DirectionToDoor(directionOfCurrentRoomFromPreviousRoom))).First();
