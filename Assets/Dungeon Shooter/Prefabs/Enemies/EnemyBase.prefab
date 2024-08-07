@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 677159069580127642}
   - component: {fileID: 7171600567470510642}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpawnState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6489583556164049560}
   - component: {fileID: 1982249671339414757}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MoveState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2445076374526380429}
   - component: {fileID: 303550036671436674}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DamageCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2976363737404325799}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,7 +196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 683776234190103920}
   - component: {fileID: 6557958406086451920}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpriteRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,9 +256,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1498895735
+  m_SortingLayer: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
   m_Color: {r: 0.9433962, g: 0.25364897, b: 0.25364897, a: 1}
   m_FlipX: 0
@@ -281,9 +281,9 @@ GameObject:
   - component: {fileID: 1838803529480438654}
   - component: {fileID: 9180381254765198363}
   - component: {fileID: 3758094602432703400}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyBase
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -321,8 +321,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 0
+  _attackDistance: 1
   _playerTransform: {fileID: 0}
-  _marker: {fileID: 6168470794142635413, guid: 22192ba076106bf4cb2de035c2427675, type: 3}
   _moveState: {fileID: 1982249671339414757}
   _attackState: {fileID: 0}
   _spawnState: {fileID: 7171600567470510642}

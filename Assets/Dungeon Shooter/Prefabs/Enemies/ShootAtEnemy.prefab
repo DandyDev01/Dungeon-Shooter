@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2494340878994653283}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GunPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,6 +40,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2494340878994653283}
     m_Modifications:
+    - target: {fileID: 628735836356287639, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 695894694056567149, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 695894695194015897, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 695894695489868334, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -96,10 +108,58 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gun2D_Pistol_00
       objectReference: {fileID: 0}
+    - target: {fileID: 695894695489868336, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 695894695563701393, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 695894696008601981, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3249379777247333281, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5437328946011849389, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5437328946011849389, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5437328946011849389, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1498895735
+      objectReference: {fileID: 0}
     - target: {fileID: 6372119177536094014, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
       propertyPath: projectilePrefab
       value: 
       objectReference: {fileID: 1854561151932834978, guid: 7ce9f49c9fdc8c44eb0da7d33f7781a9, type: 3}
+    - target: {fileID: 6835293630068679174, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7808734031861610901, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734200766717871470, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734200766717871470, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734200766717871470, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1498895735
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -158,6 +218,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2079717694020229108, guid: e28a05d3434bebe4bb059acf46bd8339, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4585100187733048843, guid: e28a05d3434bebe4bb059acf46bd8339, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6557958406086451920, guid: e28a05d3434bebe4bb059acf46bd8339, type: 3}
       propertyPath: m_Color.b
       value: 0.06741722
@@ -170,9 +238,21 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.83769286
       objectReference: {fileID: 0}
+    - target: {fileID: 6708459627215861834, guid: e28a05d3434bebe4bb059acf46bd8339, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6822672461103397452, guid: e28a05d3434bebe4bb059acf46bd8339, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 9100223722026696819, guid: e28a05d3434bebe4bb059acf46bd8339, type: 3}
       propertyPath: m_Name
       value: ShootAtEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 9100223722026696819, guid: e28a05d3434bebe4bb059acf46bd8339, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 9180381254765198363, guid: e28a05d3434bebe4bb059acf46bd8339, type: 3}
       propertyPath: _speed

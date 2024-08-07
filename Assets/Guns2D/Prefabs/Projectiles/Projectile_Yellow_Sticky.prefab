@@ -16,6 +16,14 @@ PrefabInstance:
       propertyPath: effects.Array.data[0]
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1960794320117552260, guid: 7ce9f49c9fdc8c44eb0da7d33f7781a9, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960794320117552260, guid: 7ce9f49c9fdc8c44eb0da7d33f7781a9, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1498895735
+      objectReference: {fileID: 0}
     - target: {fileID: 6061426205447922820, guid: 7ce9f49c9fdc8c44eb0da7d33f7781a9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

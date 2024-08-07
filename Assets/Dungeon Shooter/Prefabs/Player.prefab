@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8687129788791174031}
   - component: {fileID: 5807148376453156888}
   - component: {fileID: 5183433514828202728}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerGraphic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,8 @@ GameObject:
   - component: {fileID: 1477483849742457696}
   - component: {fileID: 8192673714708751161}
   - component: {fileID: -8330955472849619255}
-  m_Layer: 0
+  - component: {fileID: 6154017044158567278}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -196,6 +197,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e1ee1959cd0d0429fe6adcbabeea3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!70 &6154017044158567278
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953375264340682811}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.45}
+  m_Size: {x: 0.41, y: 0.73}
+  m_Direction: 0
 --- !u!1 &2406597810237858082
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,7 +241,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5543110303652584252}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Gun Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +275,7 @@ GameObject:
   - component: {fileID: 4262054420242433329}
   - component: {fileID: 3945133554987190339}
   - component: {fileID: 9048642280937646136}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DamageCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,6 +352,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5543110303652584252}
     m_Modifications:
+    - target: {fileID: 628735836356287639, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 695894694056567149, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 695894695194015897, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 695894695489868334, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.3
@@ -372,10 +420,58 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gun2D_Pistol_00
       objectReference: {fileID: 0}
+    - target: {fileID: 695894695489868336, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 695894695563701393, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 695894696008601981, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3249379777247333281, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5437328946011849389, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5437328946011849389, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5437328946011849389, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1498895735
+      objectReference: {fileID: 0}
     - target: {fileID: 6372119177536094014, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
       propertyPath: projectilePrefab
       value: 
       objectReference: {fileID: 1854561151932834978, guid: 7ce9f49c9fdc8c44eb0da7d33f7781a9, type: 3}
+    - target: {fileID: 6835293630068679174, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7808734031861610901, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734200766717871470, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734200766717871470, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734200766717871470, guid: 543d9faa48f4e264798a339e0eecfe36, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1498895735
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
