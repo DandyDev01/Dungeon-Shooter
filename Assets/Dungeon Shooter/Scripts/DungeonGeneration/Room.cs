@@ -7,9 +7,29 @@ namespace DungeonShooter.DungenGeneration
 {
 	public class Room : MonoBehaviour
 	{
-		[SerializeField] AttachmentPoint<Hall>[] _attachmentPoints;
+		[SerializeField] private AttachmentPoint<Hall>[] _attachmentPoints;
+
+		private bool _isBossRoom = false;
+		private bool _isCleared = false;
+		private bool _isActive = false;
+		private bool _isSpawn = false;
 
 		internal AttachmentPoint<Hall>[] Attachments => _attachmentPoints;
+
+		public void Enter()
+		{
+			_isActive = true;
+		}
+
+		public void Clear()
+		{
+			_isActive = false;
+			_isCleared = true;
+		}
+
+		public void SetSpawn(bool isSpawn) => _isSpawn = isSpawn;
+
+		public void SetBoss(bool isBoss) => _isBossRoom = isBoss;
 
 		internal bool HasDoor(Door door)
 		{
