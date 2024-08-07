@@ -13,6 +13,10 @@ PrefabInstance:
       value: StickyShootAtEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 1962476684693506024, guid: c461699bff1361c4fb153024c5f1bd40, type: 3}
+      propertyPath: fireRate
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1962476684693506024, guid: c461699bff1361c4fb153024c5f1bd40, type: 3}
       propertyPath: projectilePrefab
       value: 
       objectReference: {fileID: 201710987053775918, guid: 1231104aac1a4a54faa0f3682e43c78e, type: 3}
@@ -30,11 +34,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8642832297977927311, guid: c461699bff1361c4fb153024c5f1bd40, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 3.4689255
       objectReference: {fileID: 0}
     - target: {fileID: 8642832297977927311, guid: c461699bff1361c4fb153024c5f1bd40, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 3.4348755
       objectReference: {fileID: 0}
     - target: {fileID: 8642832297977927311, guid: c461699bff1361c4fb153024c5f1bd40, type: 3}
       propertyPath: m_LocalPosition.z

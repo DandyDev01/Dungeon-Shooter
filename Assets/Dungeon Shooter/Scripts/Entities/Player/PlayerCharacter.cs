@@ -18,7 +18,7 @@ namespace DungeonShooter.Player
 		private Gun2D _currentGun;
 		private Transform _gunPivotPoint;
 		private Animator _animator;
-		public Health _health;
+		private Health _health;
 		private InteractableBase _closestInteractable;
 		private KeyInteractable _bossRoomKey;
 		private Vector2 _moveVector = Vector2.zero;

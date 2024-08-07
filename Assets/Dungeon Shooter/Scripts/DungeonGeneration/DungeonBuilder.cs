@@ -101,7 +101,7 @@ namespace DungeonShooter.DungenGeneration
 
 				hall.transform.position = hall.transform.position + (previousRoomAttachmentPoint.position - hall.transform.position) - (hallToPreviousRoomAttachmentPoint.position - hall.transform.position);
 
-				currentRoom.transform.position = currentRoom.transform.position + (hallToCurrentRoomAttachmentPoint.position - currentRoom.transform.position) - (currentRoomAttachmentPoint.position - currentRoom.transform.position);
+				//currentRoom.transform.position = currentRoom.transform.position + (hallToCurrentRoomAttachmentPoint.position - currentRoom.transform.position) - (currentRoomAttachmentPoint.position - currentRoom.transform.position);
 
 				currentCell = neighbourCellWithLeastOptions;
 			
