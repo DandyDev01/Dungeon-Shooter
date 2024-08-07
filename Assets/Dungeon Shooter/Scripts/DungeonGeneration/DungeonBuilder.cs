@@ -108,20 +108,14 @@ namespace DungeonShooter.DungenGeneration
 				_grid.SetElement(currentCell.x, currentCell.y,
 					new List<Tuple<Room, bool>> { new Tuple<Room, bool>(currentRoom, true) });
 				
-				
 				_currentRoomCount += 1;
 			}
-
-			//TODO: Update rooms that have unlinked doors.
 
 			// cases: door that leads to an empty cell, door that leads to a cell that is not empty, door leads down hall that leads no where.
 			List<Room> rooms = _dungenGrid.GetRooms();
 
 			foreach (Room room in rooms)
 			{
-				// insdead of adding rooms, switch rooms so that there is the right amount of doors
-				//AddAttachmentsToRoomsMissingAttachments(room);
-
 				if (room.Attachments.Contains(x => x.AttachedTo == null))
 					UpdateRoom(room);
 			}
@@ -172,6 +166,7 @@ namespace DungeonShooter.DungenGeneration
 			Destroy(old.gameObject);
 		}
 
+		[Obsolete("Use UpdateRoom instead.")]
 		private void AddAttachmentsToRoomsMissingAttachments(Room room)
 		{
 			// add hall and room to rooms that have door going no where.
