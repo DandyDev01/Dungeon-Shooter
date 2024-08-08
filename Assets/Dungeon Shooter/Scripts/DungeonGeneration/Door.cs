@@ -15,7 +15,7 @@ namespace DungeonShooter.DungenGeneration
 
 		private void OnTriggerEnter2D(Collider2D collision)
 		{
-			if (_room.IsActive || _room.IsCleared)
+			if (_room.IsActive || _room.IsCleared || collision.gameObject.tag != "Player")
 				return;
 
 			_room.Enter();
