@@ -27,6 +27,7 @@ namespace DungeonShooter
 			gameObject.SetActive(true);
 
 			_timer.Play();
+			
 			_particleSystem.Play();
 		}
 
@@ -36,12 +37,14 @@ namespace DungeonShooter
 
 			_timer.Stop();
 			_timer.Reset(_spawnTime);
+			
 			_particleSystem.Stop();
 		}
 
 		public override void Run()
 		{
 			_timer.Tick(Time.deltaTime);
+			
 			CheckForStateSwitch();
 		}
 

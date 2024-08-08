@@ -54,7 +54,7 @@ namespace DungeonShooter
 			var player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacter>();
 			player.Health.Damage(1);
 
-			Destroy(transform.parent.gameObject);
+			_enemy.Health.Damage(_enemy.Health.MaxHealth);
 		}
 
 		protected override void CheckForStateSwitch()
