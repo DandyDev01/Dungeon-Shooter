@@ -1,8 +1,6 @@
 using DungeonShooter.Player;
 using DungeonShooter.Player.Effects;
 using Guns2D;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
