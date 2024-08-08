@@ -176,7 +176,12 @@ namespace DungeonShooter.Player
 
 		public void SwitchGun(Gun2D newGun)
 		{
+			newGun.transform.parent = _currentGun.transform.parent;
+
+			Destroy(_currentGun.gameObject);
+
 			_currentGun = newGun;
+			_currentGun.transform.position = Vector3.zero;
 			_currentGun.Init();
 		}
 

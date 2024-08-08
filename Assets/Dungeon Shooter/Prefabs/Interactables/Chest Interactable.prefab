@@ -166,4 +166,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lootOptions:
-  - {fileID: 4175376808757597735, guid: ec5e5dd589f17c642990a03e781c7b2a, type: 3}
+  - {fileID: 1760889568733382984, guid: 8fe304ebd92a7e74ca30ca14681732c9, type: 3}
+  - {fileID: 3655402731672583158, guid: 99b847b0086881340b49c16fe2df343a, type: 3}
+  - {fileID: 5204734731540118080, guid: 16b291ef83bb054458047e39b2c44211, type: 3}
+  - {fileID: 8568702367707297770, guid: cfb1c5896a5157a458b3d8054aa01156, type: 3}
+  - {fileID: 8743852800024872632, guid: b0ba5511ce2d8a14e8a011141b08fc09, type: 3}
