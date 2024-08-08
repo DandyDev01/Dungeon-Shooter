@@ -22,7 +22,6 @@ public class PlayerDamageCollider : MonoBehaviour
 
 		if (collision.transform.tag == "Projectile")
 		{
-			Debug.Log("Hit by " + collision.gameObject.name);
 			Projectile projectile = collision.gameObject.GetComponent<Projectile>();
 			_player.Health.Damage(projectile.Damage);
 

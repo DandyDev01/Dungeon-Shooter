@@ -1,4 +1,5 @@
 using Guns2D;
+using System;
 using UnityEngine;
 
 namespace DungeonShooter
@@ -7,11 +8,26 @@ namespace DungeonShooter
 	{
 		private Enemy _enemy;
 
-		public bool IsDisabled { get; set; }
+		public bool IsDisabled { get; set; } = false;
 
 		private void Awake()
 		{
 			_enemy = GetComponentInParent<Enemy>();	
+		}
+
+		private void Start()
+		{
+			_enemy.Health.OnDeath += Die;
+		}
+
+		private void OnDestroy()
+		{
+			_enemy.Health.OnDeath -= Die;
+		}
+
+		private void Die()
+		{
+			_enemy.CurrentState.SwitchState(_enemy.DeadState);
 		}
 
 		private void OnCollisionEnter2D(Collision2D collision)
@@ -21,7 +37,6 @@ namespace DungeonShooter
 
 			if (collision.transform.tag == "Projectile")
 			{
-				Debug.Log("Hit by " + collision.gameObject.name);
 				Projectile projectile = collision.gameObject.GetComponent<Projectile>();
 
 				_enemy.Health.Damage(projectile.Damage);

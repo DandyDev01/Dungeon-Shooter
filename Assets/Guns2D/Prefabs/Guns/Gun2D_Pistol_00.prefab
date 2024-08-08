@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5137178723867850435}
   - component: {fileID: 5437328946011849389}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SpriteRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,9 +70,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1498895735
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d90d57440c82dd4468d1e84e5f38f807, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 695894694056567146}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: States
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 695894695194015894}
   - component: {fileID: 3659589113748609388}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ShootState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 695894695489868334}
   - component: {fileID: 6372119177536094014}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Gun2D_Pistol_00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5137178723867850435}
@@ -218,8 +218,8 @@ MonoBehaviour:
   reloadTime: 1
   maxAmmo: 30
   currentAmmo: 30
-  clipSize: 8
-  clipAmmo: 8
+  clipSize: 1000
+  clipAmmo: 1000
   fireClip: {fileID: 0}
   reloadClip: {fileID: 0}
   flashGraphic: {fileID: 7808734031861610901}
@@ -234,7 +234,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 695894695563701390}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: shootTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,7 +266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 695894696008601978}
   - component: {fileID: 4782645543984842680}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: IdleState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -310,7 +310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5460926153650692600}
   - component: {fileID: 7065519457627974987}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ReloadState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +357,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3930720648653956472}
   - component: {fileID: 8734200766717871470}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: spriteRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -417,9 +417,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1498895735
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 155ee505144fcf148a60f4feae10a90d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -440,7 +440,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4477864675585887174}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FlashGraphic
   m_TagString: Untagged
   m_Icon: {fileID: 0}

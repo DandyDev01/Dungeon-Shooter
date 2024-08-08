@@ -16,6 +16,7 @@ namespace DungeonShooter
 		[SerializeField] private EnemyBaseState _attackState;
 		[SerializeField] private EnemyBaseState _spawnState;
 		[SerializeField] private EnemyBaseState _stunState;
+		[SerializeField] private EnemyBaseState _deadState;
 
 		private Health _health;
 		private Animator _animator;
@@ -25,6 +26,7 @@ namespace DungeonShooter
 		public EnemyBaseState AttackState => _attackState;
 		public EnemyBaseState SpawnState => _spawnState;
 		public EnemyBaseState StunState => _stunState;
+		public EnemyBaseState DeadState => _deadState;
 		public Health Health => _health;
 		public EnemyBaseState CurrentState { get; set; }
 		public float AttackDistance => _attackDistance;

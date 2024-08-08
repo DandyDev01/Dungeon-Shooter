@@ -7,22 +7,46 @@ namespace DungeonShooter
 {
 	public class SpawnState : EnemyBaseState
 	{
+		private const float _spawnTime = 2f;
+		private Timer _timer;
+		private ParticleSystem _particleSystem;
+		private SpriteRenderer _spriteRenderer;
+
+		private void Awake()
+		{
+			_enemy = GetComponentInParent<Enemy>();
+			_particleSystem = GetComponentInChildren<ParticleSystem>();
+			_spriteRenderer = transform.parent.GetComponentInChildren<SpriteRenderer>();
+			_timer = new Timer(_spawnTime, false);
+		}
+
 		public override void Enter()
 		{
-			SwitchState(_enemy.MoveState);
+			_spriteRenderer.enabled = false;
+
+			_timer.Play();
+			_particleSystem.Play();
 		}
 
 		public override void Exit()
 		{
+			_spriteRenderer.enabled = true;
+
+			_timer.Stop();
+			_timer.Reset(_spawnTime);
+			_particleSystem.Stop();
 		}
 
 		public override void Run()
 		{
+			_timer.Tick(Time.deltaTime);
+			CheckForStateSwitch();
 		}
 
 		protected override void CheckForStateSwitch()
 		{
-			throw new System.NotImplementedException();
+			if (_timer.Finished)
+				SwitchState(_enemy.MoveState);
 		}
 	}
 }
