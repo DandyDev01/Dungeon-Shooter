@@ -9,6 +9,7 @@ namespace DungeonShooter.Player
 {
 	public class PlayerCharacter : MonoBehaviour
 	{
+		[SerializeField] private PlayerSpecial _specialAbility;
 		[SerializeField] private float _speed = 6f;
 		[SerializeField] private float _dodgeForce = 6f;
 
@@ -84,6 +85,9 @@ namespace DungeonShooter.Player
 
 			if (_inputControls.Player.Interact.WasPressedThisFrame())
 				_closestInteractable.Interact(this);
+
+			if (_inputControls.Player.SpecialMove.WasPerformedThisFrame())
+				_specialAbility.Activate();
 		}
 
 		private void CheckForInteractables()

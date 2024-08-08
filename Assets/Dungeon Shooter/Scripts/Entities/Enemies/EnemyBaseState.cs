@@ -22,7 +22,7 @@ namespace DungeonShooter
 
 		protected abstract void CheckForStateSwitch();
 
-		protected void SwitchState(EnemyBaseState newState)
+		public void SwitchState(EnemyBaseState newState)
 		{
 			Exit();
 
