@@ -10,6 +10,7 @@ namespace DungeonShooter
 		{
 			_enemy.SpeedModifier = 0f;
 			_enemy.PlayAnimation("Dead");
+			Debug.Log("Dead");
 		}
 
 		public override void Exit()

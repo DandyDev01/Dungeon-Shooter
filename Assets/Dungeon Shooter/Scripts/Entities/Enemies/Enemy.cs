@@ -52,7 +52,7 @@ namespace DungeonShooter
 
 		public void PlayAnimation(string name)
 		{
-			_animator.Play(name);
+			//_animator.Play(name);
 		}
 
 		public Vector2 GetTargetPosition()

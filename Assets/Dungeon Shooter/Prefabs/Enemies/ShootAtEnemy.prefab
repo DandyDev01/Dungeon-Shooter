@@ -286,7 +286,8 @@ PrefabInstance:
       propertyPath: _attackDistance
       value: 5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1071805181151680077, guid: e28a05d3434bebe4bb059acf46bd8339, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2976363737404325799, guid: e28a05d3434bebe4bb059acf46bd8339, type: 3}

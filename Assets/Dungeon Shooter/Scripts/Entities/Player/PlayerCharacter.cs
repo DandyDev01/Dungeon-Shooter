@@ -85,7 +85,7 @@ namespace DungeonShooter.Player
 
 			CheckForInteractables();
 
-			if (_inputControls.Player.Interact.WasPressedThisFrame())
+			if (_inputControls.Player.Interact.WasPressedThisFrame() && _closestInteractable != null)
 				_closestInteractable.Interact(this);
 
 			if (_inputControls.Player.SpecialMove.WasPerformedThisFrame())
