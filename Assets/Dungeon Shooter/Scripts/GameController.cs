@@ -33,7 +33,7 @@ namespace DungeonShooter
 
 		private void Update()
 		{
-			if (Input.GetKeyDown(KeyCode.Space))
+			if (Input.GetKeyDown(KeyCode.P))
 			{
 				SceneManager.LoadScene(0);
 				Console.Clear();

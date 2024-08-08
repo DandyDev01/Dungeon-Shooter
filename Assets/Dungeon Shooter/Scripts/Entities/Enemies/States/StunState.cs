@@ -7,21 +7,21 @@ namespace DungeonShooter
 	public class StunState : EnemyBaseState
 	{
 		private Timer _timer;
+		private ParticleSystem _particleSystem;
 		private float _duration = 3f;
 
-		private void Awake()
+		private void Start()
 		{
+			_particleSystem = GetComponentInChildren<ParticleSystem>();
 			_timer = new Timer(_duration, false);
-			_timer.OnTimerEnd += Exit;
-		}
 
-		private void Update()
-		{
-			_timer.Tick(Time.deltaTime);
+			_particleSystem.Stop();
 		}
 
 		public override void Enter()
 		{
+			_particleSystem.Play();
+
 			_timer.Play();
 
 			_enemy.SpeedModifier = 0;
@@ -29,6 +29,8 @@ namespace DungeonShooter
 
 		public override void Exit()
 		{
+			_particleSystem.Stop();
+
 			_timer.Stop();
 			_timer.Reset(_duration);
 
@@ -37,7 +39,8 @@ namespace DungeonShooter
 
 		public override void Run()
 		{
-
+			CheckForStateSwitch();
+			_timer.Tick(Time.deltaTime);
 		}
 
 		protected override void CheckForStateSwitch()

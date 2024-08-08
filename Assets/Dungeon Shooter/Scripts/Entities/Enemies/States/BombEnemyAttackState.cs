@@ -33,6 +33,8 @@ namespace DungeonShooter
 		{
 			_damageRadiusVisualizer.SetActive(false);
 			_damgeRadiusExpansion.SetActive(false);
+
+			_timePassed = 0f;
 		}
 
 		public override void Run()
@@ -43,6 +45,8 @@ namespace DungeonShooter
 				Explode();
 
 			_damgeRadiusExpansion.transform.localScale += Vector3.one * _expansionSpeed * Time.deltaTime;
+
+			CheckForStateSwitch();
 		}
 
 		private void Explode()
