@@ -23,6 +23,14 @@ namespace DungeonShooter
 			return false;
 		}
 
+		public static void SetChildrenActive(this Transform me, bool active)
+		{
+			for (int i = 0; i < me.childCount; i++)
+			{
+				me.GetChild(0).gameObject.SetActive(active);
+			}
+		}
+
 		public static Transform GetChildWhere(this Transform me, System.Func<Transform, bool> x)
 		{
 			List<Transform> list = new List<Transform>();

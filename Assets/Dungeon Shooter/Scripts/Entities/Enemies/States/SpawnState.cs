@@ -22,7 +22,9 @@ namespace DungeonShooter
 
 		public override void Enter()
 		{
-			_spriteRenderer.enabled = false;
+			transform.parent.SetChildrenActive(false);
+
+			gameObject.SetActive(true);
 
 			_timer.Play();
 			_particleSystem.Play();
@@ -30,7 +32,7 @@ namespace DungeonShooter
 
 		public override void Exit()
 		{
-			_spriteRenderer.enabled = true;
+			transform.parent.SetChildrenActive(true);
 
 			_timer.Stop();
 			_timer.Reset(_spawnTime);
