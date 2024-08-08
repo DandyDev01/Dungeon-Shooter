@@ -6,7 +6,9 @@ namespace DungeonShooter
 {
 		public override void Interact(PlayerCharacter player)
 		{
-			player.PickupBossRoomKey(this);
+			player.PickupBossRoomKey(true);
+
+			Destroy(gameObject);
 		}
 	}
 }

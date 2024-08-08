@@ -12,6 +12,8 @@ namespace DungeonShooter
 		{
 			Gun2D newGun = Instantiate(_pickup, Vector3.zero, Quaternion.identity);
 			player.SwitchGun(newGun);
+
+			Destroy(gameObject);
 		}
 	}
 }

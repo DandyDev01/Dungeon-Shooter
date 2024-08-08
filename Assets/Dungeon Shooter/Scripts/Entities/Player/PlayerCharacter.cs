@@ -22,9 +22,9 @@ namespace DungeonShooter.Player
 		private Animator _animator;
 		private Health _health;
 		private InteractableBase _closestInteractable;
-		private KeyInteractable _bossRoomKey;
 		private Vector2 _moveVector = Vector2.zero;
 		private Vector3 _mousePosition = Vector3.zero;
+		private bool _bossRoomKey;
 		private bool _dodgeInput;
 		private bool _attackInput;
 		private float _speedModifier = 1f;
@@ -187,7 +187,7 @@ namespace DungeonShooter.Player
 			_currentGun.Init();
 		}
 
-		public void PickupBossRoomKey(KeyInteractable key)
+		public void PickupBossRoomKey(bool key)
 		{
 			_bossRoomKey = key;
 		}

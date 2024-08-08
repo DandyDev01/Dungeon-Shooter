@@ -11,6 +11,8 @@ namespace DungeonShooter
 		public override void Interact(PlayerCharacter player)
 		{
 			player.AddEffect(new InvincibleEffect(5f));
+
+			Destroy(gameObject);
 		}
 	}
 }

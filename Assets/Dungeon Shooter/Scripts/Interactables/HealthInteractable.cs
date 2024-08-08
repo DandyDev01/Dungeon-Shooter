@@ -9,5 +9,7 @@ public class HealthInteractable : InteractableBase
 	public override void Interact(PlayerCharacter player)
 	{
 		player.Health.Heal(_healAmount);
+
+		Destroy(gameObject);
 	}
 }
