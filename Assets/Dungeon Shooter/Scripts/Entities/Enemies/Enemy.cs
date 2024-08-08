@@ -34,6 +34,7 @@ namespace DungeonShooter
 		private void Awake()
 		{
 			_health = new Health(5);
+			_playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 			_animator = GetComponentInChildren<Animator>();
 		}
 

@@ -8,6 +8,7 @@ namespace DungeonShooter.DungenGeneration
 	public class Room : MonoBehaviour
 	{
 		[SerializeField] private AttachmentPoint<Hall>[] _attachmentPoints;
+		[SerializeField] private Enemy[] _enemies;
 
 		private Transform[] _doors;
 		private Door[] _doorTriggers;
@@ -59,8 +60,11 @@ namespace DungeonShooter.DungenGeneration
 			LockDoors();
 
 			// spawn enemies
-
+			int index = UnityEngine.Random.Range(0, _enemies.Length);
+			Enemy e = Instantiate(_enemies[index], transform.position, Quaternion.identity);
+			
 			// when all enemies are dead unlock the doors
+			e.Health.OnDeath += UnLockDoors;
 		}
 
 		public void Clear()

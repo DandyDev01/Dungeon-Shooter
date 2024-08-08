@@ -831,6 +831,10 @@ MonoBehaviour:
   _attachmentPoints:
   - transform: {fileID: 1621799147513737298}
     door: 1
+  _enemies:
+  - {fileID: 9131529051850230586, guid: 71ea0f03cbc85224587ab87ec82bf30c, type: 3}
+  - {fileID: 5050915163796248640, guid: 93e3a1bf5b7fe8349aed5844f0c3cd77, type: 3}
+  - {fileID: 1230177740829420010, guid: c461699bff1361c4fb153024c5f1bd40, type: 3}
 --- !u!1 &6986302247950771892
 GameObject:
   m_ObjectHideFlags: 0
