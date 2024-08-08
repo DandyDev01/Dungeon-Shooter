@@ -41,44 +41,44 @@ namespace DungeonShooter
 			return null;
 		}
 
-		internal static Vector3Int DoorToDirection(this Vector3Int me, Door door)
+		internal static Vector3Int DoorToDirection(this Vector3Int me, DoorLocation door)
 		{
 			switch (door) 
 			{
-				case Door.Left:
+				case DoorLocation.Left:
 					return Vector3Int.left;
-				case Door.Right:
+				case DoorLocation.Right:
 					return Vector3Int.right;
-				case Door.Top:
+				case DoorLocation.Top:
 					return Vector3Int.up;
-				case Door.Bottom:
+				case DoorLocation.Bottom:
 					return Vector3Int.down;
 			}
 
 			throw new Exception("door error");
 		}
 
-		internal static Door DirectionToDoor(this Vector3Int me, Vector3Int direction)
+		internal static DoorLocation DirectionToDoor(this Vector3Int me, Vector3Int direction)
 		{
 			if (direction == Vector3Int.up)
 			{
-				return Door.Top;
+				return DoorLocation.Top;
 			}
 			else if (direction == Vector3Int.down)
 			{
-				return Door.Bottom;
+				return DoorLocation.Bottom;
 			}
 			else if (direction == Vector3Int.right)
 			{
-				return Door.Right;
+				return DoorLocation.Right;
 			}
 			else if (direction == Vector3Int.left)
 			{
-				return Door.Left;
+				return DoorLocation.Left;
 			}
 			else
 			{
-				return Door.Top;
+				return DoorLocation.Top;
 			}
 
 			throw new Exception("invalid direction");

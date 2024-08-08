@@ -10,7 +10,7 @@ using UnityEngine.Analytics;
 
 namespace DungeonShooter.DungenGeneration
 {
-	internal enum Door { Left, Right, Top, Bottom };
+	internal enum DoorLocation { Left, Right, Top, Bottom };
 
 	public class DungeonBuilder : MonoBehaviour
 	{
@@ -166,7 +166,7 @@ namespace DungeonShooter.DungenGeneration
 			Vector3Int cell = _dungenGrid.GetCell(room);
 			Vector3 worldPosition = room.transform.position;
 			Room newRoom = null;
-			List<Door> doors = new();
+			List<DoorLocation> doors = new();
 
 			foreach (AttachmentPoint<Hall> attachmentPoint in room.Attachments)
 			{
@@ -220,7 +220,7 @@ namespace DungeonShooter.DungenGeneration
 
 					Vector3Int[] neighbours = _grid.GetNeighbourCells(cellOfRoomMissingAttachments.x, cellOfRoomMissingAttachments.y).ToArray();
 					Vector3Int cellOfNewRoom = neighbours.Where(n => cellOfRoomMissingAttachments + Room.DoorToDirection(attachmentPoint.door) == n).First();
-					List<Door> doorsNeededByNewRoom = GetNeededDoors(cellOfNewRoom);
+					List<DoorLocation> doorsNeededByNewRoom = GetNeededDoors(cellOfNewRoom);
 					Room[] newRoomOptions = _rooms;
 					List<Room> validOptions = new();
 
@@ -330,7 +330,7 @@ namespace DungeonShooter.DungenGeneration
 			{
 				List<Tuple<Room, bool>> neighbourCellsOptions = _grid.GetElement(neighbourToUpdateCell.x, neighbourToUpdateCell.y);
 
-				Door rootToNeighbourDoor = Room.DirectionToDoor(neighbourToUpdateCell - cellOfRoot);
+				DoorLocation rootToNeighbourDoor = Room.DirectionToDoor(neighbourToUpdateCell - cellOfRoot);
 				
 				List<Tuple<Room, bool>> validNeighbourCellOptions = GetValidOptions(root, neighbourCellsOptions, 
 					neighbourToUpdateCell, rootToNeighbourDoor);
@@ -348,7 +348,7 @@ namespace DungeonShooter.DungenGeneration
 		/// <param name="rootCell">cell the root room is in</param>
 		/// <returns>valid options</returns>
 		private List<Tuple<Room, bool>> GetValidOptions(Room root, List<Tuple<Room, bool>> possibleOptions, 
-			Vector3Int cellToGetValidOptionsFrom, Door rootDoorThatLeadsToNeighbour)
+			Vector3Int cellToGetValidOptionsFrom, DoorLocation rootDoorThatLeadsToNeighbour)
 		{
 			// There are no valid options because root does not have a door facing cell.
 			if (root.Attachments.Contains(x => x.door == rootDoorThatLeadsToNeighbour) == false)
@@ -392,9 +392,9 @@ namespace DungeonShooter.DungenGeneration
 			// Remove options that do not have a door facing all neighbours with a door facing it.
 			foreach (Tuple<Room, bool> possibleOption in possibleOptions)
 			{
-				List<Door> neededDoors = GetNeededDoors(cellToGetValidOptionsFrom);
+				List<DoorLocation> neededDoors = GetNeededDoors(cellToGetValidOptionsFrom);
 
-				foreach (Door door in neededDoors)
+				foreach (DoorLocation door in neededDoors)
 				{
 					if (possibleOption.Item1.Attachments.Contains(x => x.door == door)
 						&& possibleOption.Item1.Attachments.Count() >= leastDoorsAllowed
@@ -422,9 +422,9 @@ namespace DungeonShooter.DungenGeneration
 		/// </summary>
 		/// <param name="cellToGetNeededDoorsFor">Cell of room you need the doors for.</param>
 		/// <returns>Doors that the room in the specified cell would need to connect to its neighbours.</returns>
-		private List<Door> GetNeededDoors(Vector3Int cellToGetNeededDoorsFor)
+		private List<DoorLocation> GetNeededDoors(Vector3Int cellToGetNeededDoorsFor)
 		{
-			List<Door> neededDoors = new List<Door>();
+			List<DoorLocation> neededDoors = new List<DoorLocation>();
 			foreach (Vector3Int neighbour in _grid.GetNeighbourCells(cellToGetNeededDoorsFor.x, cellToGetNeededDoorsFor.y))
 			{
 				List<Tuple<Room, bool>> neighbourOptions = _grid.GetElement(neighbour.x, neighbour.y);
@@ -450,18 +450,18 @@ namespace DungeonShooter.DungenGeneration
 		/// <param name="door">Door to get a valid door for.</param>
 		/// <returns>Door that connects to the specified door.</returns>
 		/// <exception cref="Exception">When no valid do is found</exception>
-		internal Door GetOpositeDoor(Door door)
+		internal DoorLocation GetOpositeDoor(DoorLocation door)
 		{
 			switch (door)
 			{
-				case Door.Left:
-					return Door.Right;
-				case Door.Right:
-					return Door.Left;
-				case Door.Top:
-					return Door.Bottom;
-				case Door.Bottom:
-					return Door.Top;
+				case DoorLocation.Left:
+					return DoorLocation.Right;
+				case DoorLocation.Right:
+					return DoorLocation.Left;
+				case DoorLocation.Top:
+					return DoorLocation.Bottom;
+				case DoorLocation.Bottom:
+					return DoorLocation.Top;
 			}
 
 			throw new Exception("Error with doors");

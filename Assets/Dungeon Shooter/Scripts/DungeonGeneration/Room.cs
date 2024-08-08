@@ -20,10 +20,20 @@ namespace DungeonShooter.DungenGeneration
 		public bool IsBossRoom => _isBossRoom;
 		public bool IsCleared => _isCleared;
 		public bool IsSpawn => _isSpawn;
+		public bool IsActive => _isActive;
 
 		public void Enter()
 		{
 			_isActive = true;
+
+			if (_isLoot)
+				return;
+
+			// lock doors
+
+			// spawn enemies
+
+			// when all enemies are dead unlock the doors
 		}
 
 		public void Clear()
@@ -38,7 +48,7 @@ namespace DungeonShooter.DungenGeneration
 
 		public void SetIsLoot(bool isLoot) => _isLoot = isLoot;
 
-		internal bool HasDoor(Door door)
+		internal bool HasDoor(DoorLocation door)
 		{
 			return Attachments.Contains(x => x.door == door);
 		}
@@ -48,44 +58,44 @@ namespace DungeonShooter.DungenGeneration
 			_attachmentPoints = attachments;
 		}
 
-		internal static Vector3Int DoorToDirection(Door door)
+		internal static Vector3Int DoorToDirection(DoorLocation door)
 		{
 			switch (door)
 			{
-				case Door.Left:
+				case DoorLocation.Left:
 					return Vector3Int.left;
-				case Door.Right:
+				case DoorLocation.Right:
 					return Vector3Int.right;
-				case Door.Top:
+				case DoorLocation.Top:
 					return Vector3Int.up;
-				case Door.Bottom:
+				case DoorLocation.Bottom:
 					return Vector3Int.down;
 			}
 
 			throw new Exception("door error");
 		}
 
-		internal static Door DirectionToDoor(Vector3Int direction)
+		internal static DoorLocation DirectionToDoor(Vector3Int direction)
 		{
 			if (direction == Vector3Int.up)
 			{
-				return Door.Top;
+				return DoorLocation.Top;
 			}
 			else if (direction == Vector3Int.down)
 			{
-				return Door.Bottom;
+				return DoorLocation.Bottom;
 			}
 			else if (direction == Vector3Int.right)
 			{
-				return Door.Right;
+				return DoorLocation.Right;
 			}
 			else if (direction == Vector3Int.left)
 			{
-				return Door.Left;
+				return DoorLocation.Left;
 			}
 			else
 			{
-				return Door.Top;
+				return DoorLocation.Top;
 			}
 
 			throw new Exception("invalid direction");
@@ -97,7 +107,7 @@ namespace DungeonShooter.DungenGeneration
 	{
 		[SerializeField] private Transform transform;
 		 
-		public Door door;
+		public DoorLocation door;
 		public Vector3 position => transform.position;
 		
 		public T AttachedTo { get; set; }
