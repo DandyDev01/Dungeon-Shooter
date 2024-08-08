@@ -13,6 +13,7 @@ namespace DungeonShooter.Player
 		[SerializeField] private float _speed = 6f;
 		[SerializeField] private float _dodgeForce = 6f;
 
+		private Camera _camera;
 		private List<PlayerEffect> _effects;
 		private PlayerControls _inputControls;
 		private PlayerStateHolder _stateHolder;
@@ -47,6 +48,7 @@ namespace DungeonShooter.Player
 			_animator = GetComponentInChildren<Animator>();
 			_currentGun = GetComponentInChildren<Gun2D>();
 			_health = new Health(5);
+			_camera = Camera.main;
 			_gunPivotPoint = _currentGun.transform.parent;
 
 			_currentGun.Init();
@@ -113,7 +115,7 @@ namespace DungeonShooter.Player
 
 		private void HandleGun()
 		{
-			_mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			_mousePosition = _camera.ScreenToWorldPoint(_inputControls.Player.Mouse.ReadValue<Vector2>());
 
 			Vector3 direction = (Vector3)_mousePosition - _gunPivotPoint.transform.position;
 			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
