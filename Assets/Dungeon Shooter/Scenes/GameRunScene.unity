@@ -2261,7 +2261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameController: {fileID: 151260867}
   _player1Prefab: {fileID: 8192673714708751161, guid: 706d7e12d0e7cc2458658da0c8e0469a, type: 3}
-  _player2Prefab: {fileID: 0}
+  _player2Prefab: {fileID: 5132035253874093415, guid: a2223d4e5f912054aa1cb9751b5ad37d, type: 3}
   _selectPlayer1Buton: {fileID: 1756587219}
   _selectPlayer2Buton: {fileID: 2017601542}
 --- !u!1 &2001069068
