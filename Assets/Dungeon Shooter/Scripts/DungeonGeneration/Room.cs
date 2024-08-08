@@ -79,7 +79,11 @@ namespace DungeonShooter.DungenGeneration
 			_isCleared = true;
 		}
 
-		public void SetBoss(bool isBoss) => _isBossRoom = isBoss;
+		public void SetBoss(bool isBoss)
+		{
+			_isBossRoom = isBoss;
+			LockDoors();
+		}
 
 		public void SetIsLoot(bool isLoot) => _isLoot = isLoot;
 

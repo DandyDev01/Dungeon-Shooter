@@ -16,6 +16,8 @@ namespace DungeonShooter
 			int index = UnityEngine.Random.Range(0, _lootOptions.Length);
 
 			Instantiate(_lootOptions[index], spawnLocation, Quaternion.identity);
+
+			this.enabled = false;
 		}
 	}
 }

@@ -24,7 +24,7 @@ namespace DungeonShooter.Player
 		private InteractableBase _closestInteractable;
 		private KeyInteractable _bossRoomKey;
 		private Vector2 _moveVector = Vector2.zero;
-		private Vector2 _mousePosition = Vector2.zero;
+		private Vector3 _mousePosition = Vector3.zero;
 		private bool _dodgeInput;
 		private bool _attackInput;
 		private float _speedModifier = 1f;
@@ -115,9 +115,11 @@ namespace DungeonShooter.Player
 
 		private void HandleGun()
 		{
-			_mousePosition = _camera.ScreenToWorldPoint(_inputControls.Player.Mouse.ReadValue<Vector2>());
-
-			Vector3 direction = (Vector3)_mousePosition - _gunPivotPoint.transform.position;
+			_mousePosition = _inputControls.Player.Mouse.ReadValue<Vector2>();
+			_mousePosition = _camera.ScreenToWorldPoint(_mousePosition);
+			
+			Vector3 direction = _mousePosition - _gunPivotPoint.transform.position;
+			direction = direction.normalized;
 			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
 			_gunPivotPoint.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle-90));

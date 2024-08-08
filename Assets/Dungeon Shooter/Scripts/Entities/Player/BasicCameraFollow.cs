@@ -10,7 +10,7 @@ public class BasicCameraFollow : MonoBehaviour
 	private void Awake()
 	{
 		_camera = Camera.main;
-		_cameraZ = _camera.transform.position.z;
+		_cameraZ = -10;
 	}
 
 	private void Update()
