@@ -49,16 +49,14 @@ namespace DungeonShooter
 		public void EnterDungeon()
 		{
 			SceneManager.UnloadSceneAsync("SpacePortScene");
-			_hud.gameObject.SetActive(true);
 
-			DungeonGrid grid = _dungeonBuilder.GetComponentInChildren<DungeonGrid>();
-			Vector3 centerWorld = new Vector3((grid.Oragin.x + grid.Columns * grid.CellSize) / 2,
-				(grid.Oragin.y + grid.Rows * grid.CellSize) / 2);
-			_selectPlayerCharacter.transform.position = centerWorld;
+			_hud.gameObject.SetActive(true);
 
 			_dungeonBuilder.Build();
 
 			_dungeonBuilder.InitRooms();
+
+			_selectPlayerCharacter.transform.position = _dungeonBuilder.GetSpawnRoomPosition();
 		}
 	}
 }

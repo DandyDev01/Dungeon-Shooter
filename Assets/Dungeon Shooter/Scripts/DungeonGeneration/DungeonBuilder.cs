@@ -147,6 +147,16 @@ namespace DungeonShooter.DungenGeneration
 			}
 		}
 
+		public Vector3 GetSpawnRoomPosition()
+		{
+			List<Room> rooms = _dungenGrid.GetRooms().Where(x => x.IsSpawn).ToList();
+
+			if (rooms.Count == 1)
+				return rooms.First().transform.position;
+
+			throw new Exception("No spawn room");
+		}
+
 		/// <summary>
 		/// Changes the room so that it only has doors that are connected to halls
 		/// </summary>
