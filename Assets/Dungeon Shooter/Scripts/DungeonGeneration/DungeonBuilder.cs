@@ -142,9 +142,7 @@ namespace DungeonShooter.DungenGeneration
 				if (random == 6)
 				{
 					room.SetIsLoot(true);
-					SampleGridXY roomGrid = room.GetComponentInChildren<SampleGridXY>();
-					Vector3 roomCenter = roomGrid.GetCenterWordPosition();
-					Instantiate(_chest, roomCenter, Quaternion.identity);
+					Instantiate(_chest, room.transform.position, Quaternion.identity);
 				}
 			}
 		}

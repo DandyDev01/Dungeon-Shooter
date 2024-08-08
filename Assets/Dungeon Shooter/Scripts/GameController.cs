@@ -26,11 +26,6 @@ namespace DungeonShooter
 			SceneManager.LoadSceneAsync("SpacePortScene", LoadSceneMode.Additive);
 		}
 
-		private void Start()
-		{
-
-		}
-
 		private void Update()
 		{
 			if (Input.GetKeyDown(KeyCode.P))
