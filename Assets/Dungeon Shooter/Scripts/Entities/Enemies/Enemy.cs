@@ -29,6 +29,7 @@ namespace DungeonShooter
 		public Health Health => _health;
 		public EnemyBaseState CurrentState { get; set; }
 		public float AttackDistance => _attackDistance;
+		public float SpeedModifier { get => _speedModifier; set => _speedModifier = value; }	
 
 		private void Awake()
 		{

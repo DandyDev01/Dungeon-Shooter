@@ -44,6 +44,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc6abae4784a8b45b09424594a8eea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3179777757597896292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5364602468162937165}
+  - component: {fileID: 2791696556959600087}
+  m_Layer: 7
+  m_Name: StunState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5364602468162937165
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3179777757597896292}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1838803529480438654}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2791696556959600087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3179777757597896292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29b4b1f0392b77248816ace648804742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4585100187733048843
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,6 +350,7 @@ Transform:
   - {fileID: 6489583556164049560}
   - {fileID: 2976363737404325799}
   - {fileID: 677159069580127642}
+  - {fileID: 5364602468162937165}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9180381254765198363
@@ -326,6 +371,7 @@ MonoBehaviour:
   _moveState: {fileID: 1982249671339414757}
   _attackState: {fileID: 0}
   _spawnState: {fileID: 7171600567470510642}
+  _stunState: {fileID: 2791696556959600087}
 --- !u!70 &3758094602432703400
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
