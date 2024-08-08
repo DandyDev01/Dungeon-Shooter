@@ -19,6 +19,7 @@ namespace DungeonShooter.DungenGeneration
 		
 		[SerializeField] private Room[] _rooms;
 		[SerializeField] private Hall[] _halls;
+		[SerializeField] private ChestInteractable _chest;
 
 		private GridXY<List<Tuple<Room, bool>>> _grid;
 		private DungeonGrid _dungenGrid;
@@ -124,6 +125,27 @@ namespace DungeonShooter.DungenGeneration
 			{
 				if (room.Attachments.Contains(x => x.AttachedTo == null))
 					UpdateRoom(room);
+			}
+		}
+
+		public void InitRooms()
+		{
+			List<Room> rooms = _dungenGrid.GetRooms();
+
+			foreach (Room room in rooms)
+			{
+				if (room.IsBossRoom || room.IsSpawn)
+					continue;
+
+				int random = UnityEngine.Random.Range(0, 12);
+
+				if (random == 6)
+				{
+					room.SetIsLoot(true);
+					SampleGridXY roomGrid = room.GetComponentInChildren<SampleGridXY>();
+					Vector3 roomCenter = roomGrid.GetCenterWordPosition();
+					Instantiate(_chest, roomCenter, Quaternion.identity);
+				}
 			}
 		}
 
@@ -436,5 +458,6 @@ namespace DungeonShooter.DungenGeneration
 
 			throw new Exception("Error with doors");
 		}
+
 	}
 }

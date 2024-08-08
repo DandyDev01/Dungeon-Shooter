@@ -1,3 +1,5 @@
+using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace Grid
@@ -21,6 +23,16 @@ namespace Grid
 		public void Awake()
 		{
 			grid = new GridXY<bool>(oragin, columns, Rows, CellSize);
+		}
+
+		/// <summary>
+		/// Gets the world position of the center of the grid
+		/// </summary>
+		/// <returns></returns>
+		public Vector3 GetCenterWordPosition()
+		{
+			return new Vector3((grid.Oragin.x + grid.Columns * grid.CellSize) / 2,
+			(grid.Oragin.y + grid.Rows * grid.CellSize) / 2);
 		}
 
 		public Vector3 WorldPosition(int row, int col)

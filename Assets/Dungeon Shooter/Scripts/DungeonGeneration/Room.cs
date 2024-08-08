@@ -17,6 +17,10 @@ namespace DungeonShooter.DungenGeneration
 
 		internal AttachmentPoint<Hall>[] Attachments => _attachmentPoints;
 
+		public bool IsBossRoom => _isBossRoom;
+		public bool IsCleared => _isCleared;
+		public bool IsSpawn => _isSpawn;
+
 		public void Enter()
 		{
 			_isActive = true;

@@ -62,6 +62,8 @@ namespace DungeonShooter
 			_selectPlayerCharacter.transform.position = centerWorld;
 
 			_dungeonBuilder.Build();
+
+			_dungeonBuilder.InitRooms();
 		}
 	}
 }
