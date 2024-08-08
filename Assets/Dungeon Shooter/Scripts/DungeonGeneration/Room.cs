@@ -9,6 +9,8 @@ namespace DungeonShooter.DungenGeneration
 	{
 		[SerializeField] private AttachmentPoint<Hall>[] _attachmentPoints;
 
+		private Transform[] _doors;
+		private Door[] _doorTriggers;
 		private bool _isBossRoom = false;
 		private bool _isCleared = false;
 		private bool _isActive = false;
@@ -22,6 +24,30 @@ namespace DungeonShooter.DungenGeneration
 		public bool IsSpawn => _isSpawn;
 		public bool IsActive => _isActive;
 
+		private void Awake()
+		{
+			_doors = transform.GetChildrenWhere(x => x.tag == "Door");
+			_doorTriggers = GetComponentsInChildren<Door>();
+			
+			UnLockDoors();
+		}
+
+		private void UnLockDoors()
+		{
+			foreach (Transform door in _doors)
+			{
+				door.gameObject.SetActive(false);
+			}
+		}
+
+		private void LockDoors()
+		{
+			foreach (Transform door in _doors)
+			{
+				door.gameObject.SetActive(true);
+			}
+		}
+
 		public void Enter()
 		{
 			_isActive = true;
@@ -30,6 +56,7 @@ namespace DungeonShooter.DungenGeneration
 				return;
 
 			// lock doors
+			LockDoors();
 
 			// spawn enemies
 
@@ -40,9 +67,15 @@ namespace DungeonShooter.DungenGeneration
 		{
 			_isActive = false;
 			_isCleared = true;
+
+			UnLockDoors();
 		}
 
-		public void SetSpawn(bool isSpawn) => _isSpawn = isSpawn;
+		public void SetSpawn(bool isSpawn)
+		{
+			_isSpawn = isSpawn;
+			_isCleared = true;
+		}
 
 		public void SetBoss(bool isBoss) => _isBossRoom = isBoss;
 

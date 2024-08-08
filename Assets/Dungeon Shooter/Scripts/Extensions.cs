@@ -41,6 +41,20 @@ namespace DungeonShooter
 			return null;
 		}
 
+		public static Transform[] GetChildrenWhere(this Transform me, System.Func<Transform, bool> x)
+		{
+			List<Transform> list = new List<Transform>();
+
+			for (int i = 0; i < me.childCount; i++)
+			{
+				list.Add(me.GetChild(i));
+			}
+
+			var options = list.Where(x);
+
+			return options.ToArray();
+		}
+
 		internal static Vector3Int DoorToDirection(this Vector3Int me, DoorLocation door)
 		{
 			switch (door) 

@@ -19,6 +19,7 @@ namespace DungeonShooter.DungenGeneration
 				return;
 
 			_room.Enter();
+			Debug.Log("Enter", collision);
 		}
 	}
 }
