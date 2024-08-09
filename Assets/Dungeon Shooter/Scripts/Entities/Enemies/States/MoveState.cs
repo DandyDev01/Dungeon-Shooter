@@ -10,11 +10,12 @@ namespace DungeonShooter
 		
 		public override void Enter()
 		{
-			
+			_enemy.PlayAnimation("Move");
 		}
 
 		public override void Exit()
 		{
+			
 		}
 
 		public override void Run()
