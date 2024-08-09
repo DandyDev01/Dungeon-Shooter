@@ -50,16 +50,27 @@ namespace DungeonShooter
 			CurrentState.Run();
 		}
 
+		/// <summary>
+		/// Plays a specified animation.
+		/// </summary>
+		/// <param name="name">Name of the animation to play.</param>
 		public void PlayAnimation(string name)
 		{
 			_animator.Play(name);
 		}
 
+		/// <summary>
+		/// Get the position of the enemies target.
+		/// </summary>
+		/// <returns>Position of the target.</returns>
 		public Vector2 GetTargetPosition()
 		{
 			return _playerTransform.position;
 		}
 
+		/// <summary>
+		/// Moves the enemy around the world to their target.
+		/// </summary>
 		public void Move()
 		{
 			transform.position = Vector2.MoveTowards(transform.position, GetTargetPosition(), _speed * _speedModifier * Time.deltaTime);

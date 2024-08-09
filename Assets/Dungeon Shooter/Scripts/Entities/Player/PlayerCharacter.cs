@@ -96,6 +96,9 @@ namespace DungeonShooter.Player
 				_specialAbility.Activate();
 		}
 
+		/// <summary>
+		/// Flips the player sprite to orient with the direction they are moving on the x-axis
+		/// </summary>
 		private void SpriteFlip()
 		{
 			if (_moveVector.x > 0)
@@ -104,6 +107,9 @@ namespace DungeonShooter.Player
 				_spriteRenderer.flipX = false;
 		}
 
+		/// <summary>
+		/// Checks for interactables around the player.
+		/// </summary>
 		private void CheckForInteractables()
 		{
 			Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _interationRange)
@@ -125,6 +131,9 @@ namespace DungeonShooter.Player
 			_closestInteractable.transform.localScale = Vector2.one * 2;
 		}
 
+		/// <summary>
+		/// Set the guns rotation and handle its state.
+		/// </summary>
 		private void HandleGun()
 		{
 			_mousePosition = _inputControls.Player.Mouse.ReadValue<Vector2>();
@@ -144,6 +153,9 @@ namespace DungeonShooter.Player
 			_currentGun.RunActiveState(Time.deltaTime);
 		}
 
+		/// <summary>
+		/// Apply active efffects to the player.
+		/// </summary>
 		private void UpdateEffects()
 		{
 			PlayerEffect effectToRemove = null;
@@ -168,11 +180,19 @@ namespace DungeonShooter.Player
 			_moveVector = Vector2.zero;
 		}
 
+		/// <summary>
+		/// Plays a specified animation.
+		/// </summary>
+		/// <param name="animationName">Name of the animation to play.</param>
 		public void PlayAnimation(string animationName)
 		{
 			_animator.Play(animationName);
 		}
 
+		/// <summary>
+		/// Adds an effect to the player.
+		/// </summary>
+		/// <param name="effect">Effect that will be added to the player.</param>
 		public void AddEffect(PlayerEffect effect)
 		{
 			if (_effects.Contains(effect) || _effects.Contains(x => x.EffectType == effect.EffectType))
@@ -182,12 +202,20 @@ namespace DungeonShooter.Player
 			effect.Start(this);
 		}
 
+		/// <summary>
+		/// Removes an effect from the player.
+		/// </summary>
+		/// <param name="effect">Effect to remove from the player.</param>
 		public void RemoveEffect(PlayerEffect effect)
 		{
 			if (_effects.Contains(effect))
 				_effects.Remove(effect);
 		}
 
+		/// <summary>
+		/// Switch out the gun the player is using.
+		/// </summary>
+		/// <param name="newGun">The new gun that the player will be using.</param>
 		public void SwitchGun(Gun2D newGun)
 		{
 			newGun.transform.parent = _currentGun.transform.parent;
@@ -199,6 +227,10 @@ namespace DungeonShooter.Player
 			_currentGun.Init();
 		}
 
+		/// <summary>
+		/// Sets the value of bossKey
+		/// </summary>
+		/// <param name="key">Wheather or not the player has a boss key.</param>
 		public void PickupBossRoomKey(bool key)
 		{
 			_bossRoomKey = key;
