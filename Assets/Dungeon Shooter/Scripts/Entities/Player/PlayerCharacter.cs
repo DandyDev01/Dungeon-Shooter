@@ -98,9 +98,9 @@ namespace DungeonShooter.Player
 
 		private void SpriteFlip()
 		{
-			if (_moveVector == Vector2.right)
+			if (_moveVector.x > 0)
 				_spriteRenderer.flipX = true;
-			else if (_moveVector == Vector2.left)
+			else if (_moveVector.x < 0)
 				_spriteRenderer.flipX = false;
 		}
 
