@@ -139,8 +139,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5543110303652584252}
   - {fileID: 8687129788791174031}
+  - {fileID: 5543110303652584252}
   - {fileID: 4262054420242433329}
   - {fileID: 2388839736839817738}
   m_Father: {fileID: 0}
@@ -311,6 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d3af2267e415fe49811f1780a657bd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hitMaterial: {fileID: 2100000, guid: f20644ccc517c264487a325d770203f3, type: 2}
 --- !u!70 &9048642280937646136
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

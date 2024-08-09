@@ -10,8 +10,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 953375264340682811, guid: 706d7e12d0e7cc2458658da0c8e0469a, type: 3}
       propertyPath: m_Name
-      value: Player_01
+      value: PlayerGirl
       objectReference: {fileID: 0}
+    - target: {fileID: 3945133554987190339, guid: 706d7e12d0e7cc2458658da0c8e0469a, type: 3}
+      propertyPath: _hitMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: a158dcccfc580f04a815777355fe8b1c, type: 2}
     - target: {fileID: 5183433514828202728, guid: 706d7e12d0e7cc2458658da0c8e0469a, type: 3}
       propertyPath: m_Controller
       value: 
