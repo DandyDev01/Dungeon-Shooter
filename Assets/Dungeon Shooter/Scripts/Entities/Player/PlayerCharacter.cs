@@ -15,6 +15,7 @@ namespace DungeonShooter.Player
 
 		private Camera _camera;
 		private List<PlayerEffect> _effects;
+		private SpriteRenderer _spriteRenderer;
 		private PlayerControls _inputControls;
 		private PlayerStateHolder _stateHolder;
 		private Gun2D _currentGun;
@@ -45,6 +46,7 @@ namespace DungeonShooter.Player
 			_inputControls = new PlayerControls();
 			_stateHolder = new PlayerStateHolder(this);
 			_effects = new List<PlayerEffect>();
+			_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 			_animator = GetComponentInChildren<Animator>();
 			_currentGun = GetComponentInChildren<Gun2D>();
 			_health = new Health(5);
@@ -85,11 +87,21 @@ namespace DungeonShooter.Player
 
 			CheckForInteractables();
 
+			SpriteFlip();
+
 			if (_inputControls.Player.Interact.WasPressedThisFrame() && _closestInteractable != null)
 				_closestInteractable.Interact(this);
 
 			if (_inputControls.Player.SpecialMove.WasPerformedThisFrame())
 				_specialAbility.Activate();
+		}
+
+		private void SpriteFlip()
+		{
+			if (_moveVector == Vector2.right)
+				_spriteRenderer.flipX = true;
+			else if (_moveVector == Vector2.left)
+				_spriteRenderer.flipX = false;
 		}
 
 		private void CheckForInteractables()

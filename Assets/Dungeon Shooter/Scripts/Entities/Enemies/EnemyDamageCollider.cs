@@ -37,7 +37,7 @@ namespace DungeonShooter
 
 		private void OnCollisionEnter2D(Collision2D collision)
 		{
-			if (IsDisabled)
+			if (IsDisabled || _enemy.CurrentState is DeadState)
 				return;
 
 			if (collision.transform.tag == "Projectile")
