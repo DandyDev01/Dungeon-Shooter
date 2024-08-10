@@ -10,7 +10,6 @@ namespace DungeonShooter.DungenGeneration
 		[SerializeField] private Enemy[] _enemies;
 
 		private Transform[] _doors;
-		private Door[] _doorTriggers;
 		private bool _isBossRoom = false;
 		private bool _isCleared = false;
 		private bool _isActive = false;
@@ -27,7 +26,6 @@ namespace DungeonShooter.DungenGeneration
 		private void Awake()
 		{
 			_doors = transform.GetChildrenWhere(x => x.tag == "Door");
-			_doorTriggers = GetComponentsInChildren<Door>();
 			
 			UnLockDoors();
 		}
@@ -59,11 +57,16 @@ namespace DungeonShooter.DungenGeneration
 			LockDoors();
 
 			// spawn enemies
-			int index = UnityEngine.Random.Range(0, _enemies.Length);
-			Enemy e = Instantiate(_enemies[index], transform.position, Quaternion.identity);
-			
-			// when all enemies are dead unlock the doors
-			e.Health.OnDeath += UnLockDoors;
+			if (_isBossRoom == false)
+			{
+				int index = UnityEngine.Random.Range(0, _enemies.Length);
+				Enemy e = Instantiate(_enemies[index], transform.position, Quaternion.identity);
+				e.Health.OnDeath += Clear;
+			}
+			else
+			{
+				// do stuff for boss.
+			}
 		}
 
 		public void Clear()

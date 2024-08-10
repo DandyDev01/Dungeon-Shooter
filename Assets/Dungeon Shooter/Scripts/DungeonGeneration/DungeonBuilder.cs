@@ -38,6 +38,10 @@ namespace DungeonShooter.DungenGeneration
 		/// </summary>
 		public void Build()
 		{
+			if (_grid.Columns < MAX_ROOMS * 2 || _grid.Rows < MAX_ROOMS * 2)
+				throw new Exception("need at least " + MAX_ROOMS * 2 + " columns and rows");
+
+
 			Vector3 centerWorld = new Vector3((_grid.Oragin.x + _grid.Columns * _grid.CellSize) / 2,
 				(_grid.Oragin.y + _grid.Rows * _grid.CellSize) / 2);
 			Vector3Int currentCell = _grid.GetCellPosition(centerWorld);
@@ -118,6 +122,8 @@ namespace DungeonShooter.DungenGeneration
 				_currentRoomCount += 1;
 			}
 
+			currentRoom.SetBoss(true);
+
 			// cases: door that leads to an empty cell, door that leads to a cell that is not empty, door leads down hall that leads no where.
 			List<Room> rooms = _dungenGrid.GetRooms();
 
@@ -127,6 +133,8 @@ namespace DungeonShooter.DungenGeneration
 					UpdateRoom(room);
 			}
 		}
+
+		
 
 		public void InitRooms()
 		{
