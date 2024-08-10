@@ -20,5 +20,16 @@ namespace DungeonShooter
 		public EnemyBaseState StunState => _stunState;
 		public EnemyBaseState DeadState => _deadState;
 		public EnemyBaseState CurrentState { get; set; }
+
+		private void Start()
+		{
+			CurrentState = _spawnState;
+			CurrentState.Enter();
+		}
+
+		private void Update()
+		{
+			CurrentState.Run();
+		}
 	}
 }

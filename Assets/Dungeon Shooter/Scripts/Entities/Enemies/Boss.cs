@@ -16,6 +16,8 @@ namespace DungeonShooter
 		public BossStateBase MoveState => _moveState;
 		public BossStateBase SpawnState => _spawnState;
 		public BossStateBase DeadState => _deadState;
+		public BossStateBase StageOneState => _stageOneState;
+		public BossStateBase StageTwoState => _stageTwoState;
 
 		public BossStateBase CurrentRootState { get; set; }
 

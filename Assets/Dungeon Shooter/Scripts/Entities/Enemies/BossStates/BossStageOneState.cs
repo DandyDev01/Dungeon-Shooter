@@ -22,10 +22,13 @@ namespace DungeonShooter
 		public override void Run()
 		{
 			_subState.Run();
+			CheckForStateSwitch();
 		}
 
 		protected override void CheckForStateSwitch()
 		{
+			if (_boss.Health.Current < _boss.Health.MaxHealth / 2)
+				SwitchState(_boss.StageOneState);
 		}
 	}
 }

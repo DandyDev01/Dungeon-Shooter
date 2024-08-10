@@ -19,7 +19,6 @@ namespace DungeonShooter
 		{
 			_boss = GetComponentInParent<Boss>();
 
-			
 			_attackState = GetComponentInChildren<BossStageOneAttackState>();
 
 			_isRoot = false;
