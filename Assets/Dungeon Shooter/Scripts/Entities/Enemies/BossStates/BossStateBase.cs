@@ -36,8 +36,8 @@ namespace DungeonShooter.Enemies
 			if (newState.IsRoot)
 			{
 				Exit();
-				newState.Enter();
 				_boss.CurrentState = newState;
+				_boss.CurrentState.Enter();
 			}
 			else
 			{

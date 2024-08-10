@@ -29,7 +29,7 @@ namespace DungeonShooter.Enemies
 		public override void Run()
 		{
 			CheckForStateSwitch();
-			_subState.Run();
+			_subState?.Run();
 		}
 
 		protected override void CheckForStateSwitch()

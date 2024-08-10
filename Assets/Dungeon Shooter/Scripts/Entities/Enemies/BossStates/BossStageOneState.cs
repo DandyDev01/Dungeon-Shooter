@@ -23,7 +23,7 @@ namespace DungeonShooter.Enemies
 
 		public override void Run()
 		{
-			_subState.Run();
+			_subState?.Run();
 			CheckForStateSwitch();
 		}
 
