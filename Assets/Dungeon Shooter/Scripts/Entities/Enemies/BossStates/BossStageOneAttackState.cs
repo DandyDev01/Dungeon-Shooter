@@ -2,28 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonShooter
+namespace DungeonShooter.Enemies
 {
 	public class BossStageOneAttackState : BossStateBase
 	{
 		public override void Enter()
 		{
-			throw new System.NotImplementedException();
 		}
 
 		public override void Exit()
 		{
-			throw new System.NotImplementedException();
 		}
 
 		public override void Run()
 		{
-			throw new System.NotImplementedException();
+			CheckForStateSwitch();
 		}
 
 		protected override void CheckForStateSwitch()
 		{
-			throw new System.NotImplementedException();
+			if (Vector2.Distance(transform.position, _boss.GetTargetPosition()) > 2f)
+				SwitchState(_boss.MoveState);
 		}
 	}
 }

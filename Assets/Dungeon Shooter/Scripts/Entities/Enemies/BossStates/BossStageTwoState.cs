@@ -4,32 +4,36 @@ using UnityEngine;
 
 namespace DungeonShooter.Enemies
 {
-	public class BossStageOneState : BossStateBase
+	public class BossStageTwoState : BossStateBase
 	{
+		private SpriteRenderer _spriteRenderer;
+
 		private void Start()
 		{
 			_isRoot = true;
-			SwitchSubState(_boss.SpawnState);
+			_spriteRenderer = transform.parent.GetComponentInChildren<SpriteRenderer>();
 		}
 
 		public override void Enter()
 		{
+			_spriteRenderer.color = Color.red;
 		}
 
 		public override void Exit()
 		{
+			_spriteRenderer.color = Color.magenta;
 		}
 
 		public override void Run()
 		{
-			_subState.Run();
 			CheckForStateSwitch();
+			_subState.Run();
 		}
 
 		protected override void CheckForStateSwitch()
 		{
-			if (_boss.Health.Current < _boss.Health.MaxHealth / 2)
-				SwitchState(_boss.StageTwoState);
+			if (_boss.Health.Current <= 0)
+				SwitchState(_boss.DeadState);
 		}
 	}
 }

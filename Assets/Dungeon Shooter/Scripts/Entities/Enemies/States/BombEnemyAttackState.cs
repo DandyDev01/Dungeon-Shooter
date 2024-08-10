@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DungeonShooter.Player;
 
-namespace DungeonShooter
+namespace DungeonShooter.Enemies
 {
 	public class BombEnemyAttackState : EnemyBaseState
 	{
@@ -61,6 +61,9 @@ namespace DungeonShooter
 		{
 			if (Vector2.Distance(_enemy.transform.position, _enemy.GetTargetPosition()) > 2.5f)
 				SwitchState(_enemy.MoveState);
+			
+			if (_enemy.Health.Current <= 0)
+				SwitchState(_enemy.DeadState);
 		}
 	}
 }

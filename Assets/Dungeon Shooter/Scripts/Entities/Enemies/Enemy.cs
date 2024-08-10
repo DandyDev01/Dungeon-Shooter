@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace DungeonShooter
+namespace DungeonShooter.Enemies
 {
 	public class Enemy : EnemyBase
 	{

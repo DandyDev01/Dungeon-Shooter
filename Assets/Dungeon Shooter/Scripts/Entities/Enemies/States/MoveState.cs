@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonShooter
+namespace DungeonShooter.Enemies
 {
 	public class MoveState : EnemyBaseState
 	{
@@ -29,6 +29,9 @@ namespace DungeonShooter
 
 			if (distanceFromTarget < _enemy.AttackDistance)
 				SwitchState(_enemy.AttackState);
+
+			if (_enemy.Health.Current <= 0)
+				SwitchState(_enemy.DeadState);
 		}
 	}
 }

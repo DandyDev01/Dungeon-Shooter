@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonShooter
+namespace DungeonShooter.Enemies
 {
 	public class BossMoveState : BossStateBase
 	{
 		public override void Enter()
 		{
-			_boss.PlayAnimation("Move");
+			//_boss.PlayAnimation("Move");
 		}
 
 		public override void Exit()
@@ -27,7 +27,7 @@ namespace DungeonShooter
 			float distanceFromTarget = Vector2.Distance(transform.position, _boss.GetTargetPosition());
 
 			if (distanceFromTarget < _boss.AttackDistance)
-				SwitchState(_boss.CurrentRootState.AttackState);
+				SwitchState(_boss.CurrentState.AttackState);
 		}
 	}
 }

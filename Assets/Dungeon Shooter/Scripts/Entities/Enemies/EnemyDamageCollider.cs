@@ -3,14 +3,14 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace DungeonShooter
+namespace DungeonShooter.Enemies
 {
 	public class EnemyDamageCollider : MonoBehaviour
 	{
 		[SerializeField] private Material _hitMaterial;
 
 		private SpriteRenderer _spriteRenderer;
-		private Enemy _enemy;
+		private EnemyBase _enemy;
 
 		public bool IsDisabled { get; set; } = false;
 
@@ -20,24 +20,9 @@ namespace DungeonShooter
 			_enemy = GetComponentInParent<Enemy>();	
 		}
 
-		private void Start()
-		{
-			_enemy.Health.OnDeath += Die;
-		}
-
-		private void OnDestroy()
-		{
-			_enemy.Health.OnDeath -= Die;
-		}
-
-		private void Die()
-		{
-			_enemy.CurrentState.SwitchState(_enemy.DeadState);
-		}
-
 		private void OnCollisionEnter2D(Collision2D collision)
 		{
-			if (IsDisabled || _enemy.CurrentState is DeadState)
+			if (IsDisabled || _enemy.Health.Current <= 0)
 				return;
 
 			if (collision.transform.tag == "Projectile")

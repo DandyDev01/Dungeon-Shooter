@@ -4,25 +4,25 @@ using UnityEngine;
 
 namespace DungeonShooter.Enemies
 {
-	public class DeadState : EnemyBaseState
+	public class BossStageTwoAttackState : BossStateBase
 	{
 		public override void Enter()
 		{
-			_enemy.SpeedModifier = 0f;
-			_enemy.PlayAnimation("Dead");
 		}
 
 		public override void Exit()
 		{
-			_enemy.SpeedModifier = 1f;
 		}
 
 		public override void Run()
 		{
+			CheckForStateSwitch();
 		}
 
 		protected override void CheckForStateSwitch()
 		{
+			if (Vector2.Distance(transform.position, _boss.GetTargetPosition()) > 2f)
+				SwitchState(_boss.MoveState);
 		}
 	}
 }

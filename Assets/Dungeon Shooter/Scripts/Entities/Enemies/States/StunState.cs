@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonShooter
+namespace DungeonShooter.Enemies
 {
 	public class StunState : EnemyBaseState
 	{
@@ -47,6 +47,9 @@ namespace DungeonShooter
 		{
 			if (_timer.Finished)
 				SwitchState(_enemy.MoveState);
+
+			if (_enemy.Health.Current <= 0)
+				SwitchState(_enemy.DeadState);
 		}
 	}
 }

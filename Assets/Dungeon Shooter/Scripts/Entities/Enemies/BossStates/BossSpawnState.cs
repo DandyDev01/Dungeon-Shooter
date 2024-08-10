@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonShooter
+namespace DungeonShooter.Enemies
 {
 	public class BossSpawnState : BossStateBase
 	{
@@ -11,8 +11,9 @@ namespace DungeonShooter
 		private ParticleSystem _particleSystem;
 		private SpriteRenderer _spriteRenderer;
 
-		private void Start()
+		protected override void Awake()
 		{
+			base.Awake();
 			_particleSystem = GetComponentInChildren<ParticleSystem>();
 			_spriteRenderer = transform.parent.GetComponentInChildren<SpriteRenderer>();
 			_timer = new Timer(_spawnTime, false);

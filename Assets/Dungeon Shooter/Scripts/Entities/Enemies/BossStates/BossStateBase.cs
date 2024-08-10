@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonShooter
+namespace DungeonShooter.Enemies
 {
 	public abstract class BossStateBase : MonoBehaviour
 	{
@@ -12,10 +12,11 @@ namespace DungeonShooter
 		protected BossStateBase _subState;
 		protected bool _isRoot;
 
+		public BossStateBase Parent { get; set; }
 		public BossStateBase AttackState => _attackState;
 		public bool IsRoot => _isRoot;	
 
-		private void Awake()
+		protected virtual void Awake()
 		{
 			_boss = GetComponentInParent<Boss>();
 
@@ -38,10 +39,12 @@ namespace DungeonShooter
 			{
 				Exit();
 				newState.Enter();
-				_boss.CurrentRootState = newState;
+				_boss.CurrentState = newState;
 			}
 			else
-				SwitchSubState(newState);
+			{
+				Parent.SwitchSubState(newState);
+			}
 		}
 
 		public void SwitchSubState(BossStateBase subState)
@@ -50,9 +53,13 @@ namespace DungeonShooter
 				Debug.LogError("substate cannot be null.", gameObject);
 
 			if (_subState != null)
+			{
 				_subState.Exit();
+				_subState.Parent = null;
+			}
 
 			_subState = subState;
+			_subState.Parent = this;
 			_subState.Enter();
 		}
 

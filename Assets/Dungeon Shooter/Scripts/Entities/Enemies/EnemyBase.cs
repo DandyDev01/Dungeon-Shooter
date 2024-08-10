@@ -18,7 +18,7 @@ namespace DungeonShooter
 		public float AttackDistance => _attackDistance;
 		public float SpeedModifier { get => _speedModifier; set => _speedModifier = value; }
 
-		private void Awake()
+		protected virtual void Awake()
 		{
 			_health = new Health(5);
 			_playerTransform = GameObject.FindGameObjectWithTag("Player").transform;

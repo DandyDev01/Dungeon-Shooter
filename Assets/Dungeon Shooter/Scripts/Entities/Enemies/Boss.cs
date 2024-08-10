@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonShooter
+namespace DungeonShooter.Enemies
 {
 	public class Boss : EnemyBase
 	{
@@ -19,13 +19,26 @@ namespace DungeonShooter
 		public BossStateBase StageOneState => _stageOneState;
 		public BossStateBase StageTwoState => _stageTwoState;
 
-		public BossStateBase CurrentRootState { get; set; }
+		public BossStateBase CurrentState { get; set; }
 
-		private void Start()
+		protected override void Awake()
 		{
+			base.Awake();
 			_moveState = GetComponentInChildren<BossMoveState>();
 			_spawnState = GetComponentInChildren<BossSpawnState>();
 			_deadState = GetComponentInChildren<BossDeadState>();
+		}
+
+		private void Start()
+		{
+			CurrentState = _stageOneState;
+			CurrentState.Enter();
+			CurrentState.SwitchSubState(_spawnState);
+		}
+
+		private void Update()
+		{
+			CurrentState.Run(); 
 		}
 	}
 }
