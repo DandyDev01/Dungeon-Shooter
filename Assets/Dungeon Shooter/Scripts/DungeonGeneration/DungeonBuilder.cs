@@ -139,7 +139,7 @@ namespace DungeonShooter.DungenGeneration
 
 				int random = UnityEngine.Random.Range(0, 12);
 
-				if (random == 6)
+				if (random % 4 == 0)
 				{
 					room.SetIsLoot(true);
 					Instantiate(_chest, room.transform.position, Quaternion.identity);
