@@ -1111,14 +1111,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7084286492373862423, guid: 924dd59a6a38ad94ead6b44610003b30, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8623769396918099000, guid: 924dd59a6a38ad94ead6b44610003b30, type: 3}
+      propertyPath: _stageTwoState
+      value: 
+      objectReference: {fileID: 1751367061}
     - target: {fileID: 8917675809725380758, guid: 924dd59a6a38ad94ead6b44610003b30, type: 3}
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6672601111300504226, guid: 924dd59a6a38ad94ead6b44610003b30, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8091907696565249278, guid: 924dd59a6a38ad94ead6b44610003b30, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1751367061}
   m_SourcePrefab: {fileID: 100100000, guid: 924dd59a6a38ad94ead6b44610003b30, type: 3}
 --- !u!1001 &1334895626
 PrefabInstance:
@@ -1840,6 +1852,23 @@ MonoBehaviour:
   columns: 11
   rows: 11
   cellSize: 16
+--- !u!1 &1751367058 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8091907696565249278, guid: 924dd59a6a38ad94ead6b44610003b30, type: 3}
+  m_PrefabInstance: {fileID: 1228485356}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1751367061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751367058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a334d7d05a050d4eb0b6cb913b728b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1756587217
 GameObject:
   m_ObjectHideFlags: 0

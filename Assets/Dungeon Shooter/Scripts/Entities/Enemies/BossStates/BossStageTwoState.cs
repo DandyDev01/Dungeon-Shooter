@@ -11,12 +11,14 @@ namespace DungeonShooter.Enemies
 		private void Start()
 		{
 			_isRoot = true;
+			_attackState = GetComponentInChildren<BossStageTwoAttackState>();
 			_spriteRenderer = transform.parent.GetComponentInChildren<SpriteRenderer>();
 		}
 
 		public override void Enter()
 		{
 			_spriteRenderer.color = Color.red;
+			SwitchState(_boss.MoveState);
 		}
 
 		public override void Exit()

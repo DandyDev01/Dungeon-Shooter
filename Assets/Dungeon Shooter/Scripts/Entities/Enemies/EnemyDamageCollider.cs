@@ -17,7 +17,7 @@ namespace DungeonShooter.Enemies
 		private void Awake()
 		{
 			_spriteRenderer = transform.parent.GetComponentInChildren<SpriteRenderer>();	
-			_enemy = GetComponentInParent<Enemy>();	
+			_enemy = GetComponentInParent<EnemyBase>();	
 		}
 
 		private void OnCollisionEnter2D(Collision2D collision)

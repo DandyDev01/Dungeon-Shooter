@@ -20,8 +20,6 @@ namespace DungeonShooter.Enemies
 		{
 			_boss = GetComponentInParent<Boss>();
 
-			_attackState = GetComponentInChildren<BossStageOneAttackState>();
-
 			_isRoot = false;
 		}
 
@@ -43,7 +41,7 @@ namespace DungeonShooter.Enemies
 			}
 			else
 			{
-				Parent.SwitchSubState(newState);
+				_boss.CurrentState.SwitchSubState(newState);
 			}
 		}
 

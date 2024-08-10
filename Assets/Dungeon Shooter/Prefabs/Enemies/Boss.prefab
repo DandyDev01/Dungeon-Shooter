@@ -5036,7 +5036,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4196167974156953935}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3635e15bf5409a74db69f77560023d6f, type: 3}
   m_Name: 
@@ -5290,7 +5290,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 982786772437895302}
-  - component: {fileID: 6672601111300504226}
+  - component: {fileID: 5239660475645289371}
   m_Layer: 0
   m_Name: StateTwoState
   m_TagString: Untagged
@@ -5314,7 +5314,7 @@ Transform:
   - {fileID: 3527610478111875036}
   m_Father: {fileID: 4277453679999536326}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6672601111300504226
+--- !u!114 &5239660475645289371
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5323,7 +5323,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8091907696565249278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc09b8051a34c2e44a4e439461829a60, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a334d7d05a050d4eb0b6cb913b728b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8917675809725380758
@@ -5382,7 +5382,7 @@ MonoBehaviour:
   _attackDistance: 1
   _playerTransform: {fileID: 0}
   _stageOneState: {fileID: 6625237554661611131}
-  _stageTwoState: {fileID: 6672601111300504226}
+  _stageTwoState: {fileID: 5239660475645289371}
 --- !u!70 &4015239936359296063
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

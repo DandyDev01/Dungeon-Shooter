@@ -9,6 +9,7 @@ namespace DungeonShooter.Enemies
 		private void Start()
 		{
 			_isRoot = true;
+			_attackState = GetComponentInChildren<BossStageOneAttackState>();
 			SwitchSubState(_boss.SpawnState);
 		}
 
