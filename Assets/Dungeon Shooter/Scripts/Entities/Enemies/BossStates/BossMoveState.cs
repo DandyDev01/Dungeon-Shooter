@@ -8,22 +8,26 @@ namespace DungeonShooter
 	{
 		public override void Enter()
 		{
-			throw new System.NotImplementedException();
+			_boss.PlayAnimation("Move");
 		}
 
 		public override void Exit()
 		{
-			throw new System.NotImplementedException();
+
 		}
 
 		public override void Run()
 		{
-			throw new System.NotImplementedException();
+			_boss.Move();
+			CheckForStateSwitch();
 		}
 
 		protected override void CheckForStateSwitch()
 		{
-			throw new System.NotImplementedException();
+			float distanceFromTarget = Vector2.Distance(transform.position, _boss.GetTargetPosition());
+
+			if (distanceFromTarget < _boss.AttackDistance)
+				SwitchState(_boss.CurrentRootState.AttackState);
 		}
 	}
 }

@@ -22,8 +22,6 @@ namespace DungeonShooter
 			_attackState = GetComponentInChildren<BossStageOneAttackState>();
 
 			_isRoot = false;
-
-			SwitchSubState(_boss.MoveState);
 		}
 
 		public abstract void Enter();

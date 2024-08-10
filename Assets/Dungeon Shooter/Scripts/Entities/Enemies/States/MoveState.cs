@@ -7,7 +7,6 @@ namespace DungeonShooter
 {
 	public class MoveState : EnemyBaseState
 	{
-		
 		public override void Enter()
 		{
 			_enemy.PlayAnimation("Move");

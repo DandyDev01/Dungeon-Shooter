@@ -8,22 +8,21 @@ namespace DungeonShooter
 	{
 		public override void Enter()
 		{
-			throw new System.NotImplementedException();
+			_boss.SpeedModifier = 0f;
+			_boss.PlayAnimation("Dead");
 		}
 
 		public override void Exit()
 		{
-			throw new System.NotImplementedException();
+			_boss.SpeedModifier = 1f;
 		}
 
 		public override void Run()
 		{
-			throw new System.NotImplementedException();
 		}
 
 		protected override void CheckForStateSwitch()
 		{
-			throw new System.NotImplementedException();
 		}
 	}
 }

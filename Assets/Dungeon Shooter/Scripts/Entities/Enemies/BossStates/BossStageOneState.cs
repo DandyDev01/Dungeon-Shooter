@@ -9,6 +9,7 @@ namespace DungeonShooter
 		private void Start()
 		{
 			_isRoot = true;
+			SwitchSubState(_boss.SpawnState);
 		}
 
 		public override void Enter()
@@ -28,7 +29,7 @@ namespace DungeonShooter
 		protected override void CheckForStateSwitch()
 		{
 			if (_boss.Health.Current < _boss.Health.MaxHealth / 2)
-				SwitchState(_boss.StageOneState);
+				SwitchState(_boss.StageTwoState);
 		}
 	}
 }
