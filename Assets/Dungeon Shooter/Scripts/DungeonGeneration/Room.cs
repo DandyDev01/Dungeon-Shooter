@@ -32,7 +32,7 @@ namespace DungeonShooter.DungenGeneration
 			UnLockDoors();
 		}
 
-		private void UnLockDoors()
+		public void UnLockDoors()
 		{
 			foreach (Transform door in _doors)
 			{
@@ -42,7 +42,7 @@ namespace DungeonShooter.DungenGeneration
 			_isLocked = false;
 		}
 
-		private void LockDoors()
+		public void LockDoors()
 		{
 			foreach (Transform door in _doors)
 			{

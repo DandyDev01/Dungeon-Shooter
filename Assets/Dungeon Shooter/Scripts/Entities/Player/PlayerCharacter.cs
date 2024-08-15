@@ -36,7 +36,8 @@ namespace DungeonShooter.Player
 		public PlayerStateHolder StateHolder => _stateHolder;
 		public Vector2 MoveVector => _moveVector;
 		public bool DodgeInput => _dodgeInput;
-		public bool AttackInput => _attackInput;	
+		public bool AttackInput => _attackInput;
+		public bool BossRoomKey => _bossRoomKey;
 		public float SpeedModifier { get => _speedModifier; set => _speedModifier = value; } 
 		public float Speed => _speed;
 		public float DodgeForce => _dodgeForce;
@@ -128,7 +129,9 @@ namespace DungeonShooter.Player
 			var closest = colliders.First().GetComponent<InteractableBase>();
 
 			_closestInteractable = closest;
-			_closestInteractable.transform.localScale = Vector2.one * 2;
+
+			if (_closestInteractable.tag != "Door")
+				_closestInteractable.transform.localScale = Vector2.one * 2;
 		}
 
 		/// <summary>
