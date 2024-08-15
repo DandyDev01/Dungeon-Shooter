@@ -22,7 +22,7 @@ namespace DungeonShooter.DungenGeneration
 			room.UnLockDoors();
 		}
 
-		private void Awake()
+		private void Start()
 		{
 			_hall = GetComponentInParent<Hall>();
 		}
@@ -33,10 +33,13 @@ namespace DungeonShooter.DungenGeneration
 				return;
 
 			Room room = _hall.Attachments.OrderBy(x => Vector2.Distance(x.position, transform.position)).First().AttachedTo;
+			PlayerCharacter player = collision.GetComponent<PlayerCharacter>();
+
+			string message = player.BossRoomKey ? "Open Boss Room" : "You need a key.";
 
 			if (room.IsActive == false && room.IsLocked == true && room.IsCleared == false)
 			{
-				Debug.Log("This is the boss room, you need the key to open the door.");
+				SetMessage(message);
 			}
 		}
 	}

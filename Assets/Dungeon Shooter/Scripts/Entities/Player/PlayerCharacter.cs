@@ -127,8 +127,12 @@ namespace DungeonShooter.Player
 			}
 			
 			var closest = colliders.First().GetComponent<InteractableBase>();
-
+			
+			if (_closestInteractable != null)
+				_closestInteractable.CloseInteractionCanvas();
+			
 			_closestInteractable = closest;
+			_closestInteractable.OpenInteractionCanvas();
 
 			if (_closestInteractable.tag != "Door")
 				_closestInteractable.transform.localScale = Vector2.one * 2;
