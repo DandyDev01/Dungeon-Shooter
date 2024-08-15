@@ -49,7 +49,7 @@ namespace DungeonShooter.DungenGeneration
 			Room currentRoom =_grid.GetElement(currentCell.x, currentCell.y).GetRandom().Item1;
 			Room previousRoom = null;
 
-			for (int i = 0; i < MAX_ROOMS; i++)
+			for (int numberOfRoomsPlaced = 0; numberOfRoomsPlaced < MAX_ROOMS; numberOfRoomsPlaced++)
 			{
 				List<Tuple<Room, bool>> currentRoomOptions = _grid.GetElement(currentCell.x, currentCell.y).ToList();
 				currentRoomOptions.Clear();
@@ -76,10 +76,10 @@ namespace DungeonShooter.DungenGeneration
 				currentRoom = Instantiate(newRoom.Item1, _grid.GetWorldPosition(neighbourCellWithLeastOptions.x, neighbourCellWithLeastOptions.y), Quaternion.identity);
 				currentRoom.transform.parent = transform;
 
-				if (i == 0)
+				if (numberOfRoomsPlaced == 0)
 					currentRoom.SetSpawn(true);
 
-				if (i == MAX_ROOMS - 1)
+				if (numberOfRoomsPlaced == MAX_ROOMS - 1)
 					currentRoom.SetBoss(true);
 
 				Vector3Int directionOfCurrentRoomFromPreviousRoom = neighbourCellWithLeastOptions - currentCell;

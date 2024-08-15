@@ -15,6 +15,7 @@ namespace DungeonShooter.DungenGeneration
 		private bool _isActive = false;
 		private bool _isSpawn = false;
 		private bool _isLoot = false;
+		private bool _isLocked = false;
 
 		internal AttachmentPoint<Hall>[] Attachments => _attachmentPoints;
 
@@ -22,6 +23,7 @@ namespace DungeonShooter.DungenGeneration
 		public bool IsCleared => _isCleared;
 		public bool IsSpawn => _isSpawn;
 		public bool IsActive => _isActive;
+		public bool IsLocked => _isLocked;
 
 		private void Awake()
 		{
@@ -36,6 +38,8 @@ namespace DungeonShooter.DungenGeneration
 			{
 				door.gameObject.SetActive(false);
 			}
+
+			_isLocked = false;
 		}
 
 		private void LockDoors()
@@ -44,6 +48,8 @@ namespace DungeonShooter.DungenGeneration
 			{
 				door.gameObject.SetActive(true);
 			}
+
+			_isLocked = true;
 		}
 
 		public void Enter()
