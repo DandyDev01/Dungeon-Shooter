@@ -41,7 +41,7 @@ namespace DungeonShooter.DungenGeneration
 
 			if (room.IsActive == false && room.IsLocked == true && room.IsCleared == false)
 			{
-				SetMessage(message);
+				//SetMessage(message);
 			}
 		}
 	}
