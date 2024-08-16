@@ -12,7 +12,7 @@ namespace DungeonShooter.Enemies
 		{
 			_isRoot = true;
 			_attackState = GetComponentInChildren<BossStageTwoAttackState>();
-			_spriteRenderer = transform.parent.GetComponentInChildren<SpriteRenderer>();
+			_spriteRenderer = transform.parent.GetComponentInChildren<SpriteRenderer>(true);
 		}
 
 		public override void Enter()
