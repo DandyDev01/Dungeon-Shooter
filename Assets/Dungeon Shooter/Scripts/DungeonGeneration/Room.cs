@@ -8,6 +8,7 @@ namespace DungeonShooter.DungenGeneration
 	{
 		[SerializeField] private AttachmentPoint<Hall>[] _attachmentPoints;
 		[SerializeField] private Enemy[] _enemies;
+		[SerializeField] private Boss _boss;
 
 		private Transform[] _doors;
 		private bool _isBossRoom = false;
@@ -71,7 +72,8 @@ namespace DungeonShooter.DungenGeneration
 			}
 			else
 			{
-				// do stuff for boss.
+				Boss b = Instantiate(_boss, transform.position, Quaternion.identity);
+				b.Health.OnDeath += Clear;
 			}
 		}
 

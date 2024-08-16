@@ -1,3 +1,4 @@
+using DungeonShooter.DungenGeneration;
 using DungeonShooter.Player.Effects;
 using Guns2D;
 using System.Collections.Generic;
@@ -132,7 +133,11 @@ namespace DungeonShooter.Player
 				_closestInteractable.CloseInteractionCanvas();
 			
 			_closestInteractable = closest;
+
 			_closestInteractable.OpenInteractionCanvas();
+
+			if (_closestInteractable is HallDoor door && door.LeadsToBoss == false)
+				_closestInteractable.CloseInteractionCanvas();
 		}
 
 		/// <summary>

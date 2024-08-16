@@ -11,6 +11,8 @@ namespace DungeonShooter.DungenGeneration
 	{
 		private Hall _hall;
 
+		public bool LeadsToBoss => _hall.Attachments.OrderBy(x => Vector2.Distance(x.position, transform.position)).First().AttachedTo.IsBossRoom;
+
 		public override void Interact(PlayerCharacter player)
 		{
 			Room room = _hall.Attachments.OrderBy(x => Vector2.Distance(x.position, transform.position)).First().AttachedTo;
