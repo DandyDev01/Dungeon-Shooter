@@ -134,7 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 603d29bd856dff94e87d114ccb7e19c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactionCanvas: {fileID: 0}
   _pickup: {fileID: 1653637352288958382, guid: 4ce8df51a21430b43b133e5a770f0aa3, type: 3}
 --- !u!1 &4624876046199028580
 GameObject:
